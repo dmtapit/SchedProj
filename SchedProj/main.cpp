@@ -1,5 +1,7 @@
 #include "main.h"
 #include <wx/filename.h>
+#include <wx/fontdata.h>
+#include <wx/fontdlg.h>
 //#include "CellSheet.h"
 
 IMPLEMENT_APP(SchedProjApp)
@@ -30,6 +32,7 @@ BasicFrame::BasicFrame(const wxChar *title, int xpos, int ypos, int width, int h
 	fileMenu = new wxMenu;
 	fileMenu->Append(BASIC_OPEN, wxT("&Open File"), wxT("Open an existing file"));
 	fileMenu->Append(BASIC_ABOUT, wxT("&About"), wxT("Who wrote this!"));
+	fileMenu->Append(BASIC_FONT, wxT("&Font"), wxT("Change the damn font!"));
 	fileMenu->AppendSeparator();
 	fileMenu->Append(BASIC_EXIT, wxT("E&xit"), wxT("Stop wasting time."));
 
@@ -45,6 +48,7 @@ BEGIN_EVENT_TABLE (BasicFrame, wxFrame)
 	EVT_MENU (BASIC_OPEN, BasicFrame::OnOpenFile)
 	EVT_MENU (BASIC_ABOUT, BasicFrame::OnAbout)
 	EVT_MENU (BASIC_EXIT, BasicFrame::OnExit)
+	EVT_MENU (BASIC_FONT, BasicFrame::OnChooseFont)
 END_EVENT_TABLE()
 
 void BasicFrame::OnOpenFile(wxCommandEvent & event)
@@ -76,4 +80,26 @@ void BasicFrame::OnAbout(wxCommandEvent & event)
 void BasicFrame::OnExit(wxCommandEvent & event)
 {
 	Close(true);
+}
+
+void BasicFrame::OnChooseFont(wxCommandEvent & event)
+{
+	wxFontData fontData;
+	wxFont theFont;
+	wxColour colour;
+
+	theFont = theText->GetFont();
+	fontData.SetInitialFont(theFont);
+	colour = theText->GetForegroundColour();
+	fontData.SetColour(colour);
+	fontData.SetShowHelp(true);
+
+	wxFontDialog *dialog = new wxFontDialog(this);
+	if (dialog->ShowModal() == wxID_OK)
+	{
+		fontData = dialog->GetFontData();
+		theFont = fontData.GetChosenFont();
+		theText->SetFont(theFont);
+		theText->SetForegroundColour(fontData.GetColour());
+	}
 }

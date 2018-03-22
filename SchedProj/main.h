@@ -31,6 +31,7 @@ public:
 	void OnOpenFile(wxCommandEvent & event);
 	void OnAbout(wxCommandEvent & event);
 	void OnExit(wxCommandEvent & event);
+	void OnChooseFont(wxCommandEvent & event);
 
 	DECLARE_EVENT_TABLE() // Alert the compiler that this class will have an event table
 };
@@ -38,5 +39,6 @@ public:
 enum {
 	BASIC_EXIT = 1,
 	BASIC_OPEN = 100,
-	BASIC_ABOUT = 200
+	BASIC_ABOUT = 200,
+	BASIC_FONT = 300
 };
