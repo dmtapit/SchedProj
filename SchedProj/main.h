@@ -1,7 +1,16 @@
 #pragma once
 #include <wx/wx.h>
 
-static const wxChar *TITLE = wxT("Title of the App");
+static const wxChar *TITLE = wxT("Title of the App Under Construction");
+static const wxChar *FILETYPES = wxT(
+	"Text files|*.txt|"
+	"C/C++ source files|*.cpp;*.cc;*.c|"
+	"C/C++ header files|*.hpp;*.h|"
+	"Make files|Mak*;mak*|"
+	"Java files|*java|"
+	"Hypertext markup files|*html;*htm;*HTML;*HTM|"
+	"All files|*.*"
+);
 
 class SchedProjApp : public wxApp
 {

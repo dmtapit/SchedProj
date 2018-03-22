@@ -1,4 +1,5 @@
 #include "main.h"
+#include <wx/filename.h>
 //#include "CellSheet.h"
 
 IMPLEMENT_APP(SchedProjApp)
@@ -48,7 +49,19 @@ END_EVENT_TABLE()
 
 void BasicFrame::OnOpenFile(wxCommandEvent & event)
 {
-	theText->LoadFile(wxT("data.txt"));
+	wxFileDialog* openFileDialog = new wxFileDialog(this, wxT("Open file"), "", "", FILETYPES, wxFD_OPEN, wxDefaultPosition);
+
+	if (openFileDialog->ShowModal() == wxID_OK)
+	{
+		wxString path;
+		path.append(openFileDialog->GetDirectory());
+		path.append(wxFileName::GetPathSeparator());
+		path.append(openFileDialog->GetFilename());
+		theText->LoadFile(path);
+		SetStatusText(path, 0);
+		SetStatusText(openFileDialog->GetDirectory(), 1);
+	}
+	//theText->LoadFile(wxT("data.txt"));
 }
 
 void BasicFrame::OnAbout(wxCommandEvent & event)
