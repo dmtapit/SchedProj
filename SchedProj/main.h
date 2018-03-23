@@ -11,6 +11,7 @@ static const wxChar *FILETYPES = wxT(
 	"Hypertext markup files|*html;*htm;*HTML;*HTM|"
 	"All files|*.*"
 );
+static const wxChar *AUTHOR = wxT("Dean Tapit [3/22/2018]");
 
 class SchedProjApp : public wxApp
 {

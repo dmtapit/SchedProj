@@ -1,4 +1,5 @@
 #include "main.h"
+#include "BasicDialog.h"
 #include <wx/filename.h>
 #include <wx/fontdata.h>
 #include <wx/fontdlg.h>
@@ -129,13 +130,23 @@ void BasicFrame::OnChooseDir(wxCommandEvent & event)
 
 }
 
-void BasicFrame::OnAbout(wxCommandEvent & event)
+/*void BasicFrame::OnAbout(wxCommandEvent & event)
 {
 	wxString t = TITLE; //TITLE from main.h
 	t.append(wxT("\nDB 2001"));
 
 	wxMessageDialog aboutDialog(this, t, wxT("About Basic"), wxOK | wxCANCEL);
 	aboutDialog.ShowModal();
+}
+*/
+
+void BasicFrame::OnAbout(wxCommandEvent & event)
+{
+	BasicDialog aboutDialog(this, -1, wxT("Basic Dialog"), wxPoint(100, 100), wxSize(200, 200));
+	if (aboutDialog.ShowModal() != wxID_OK)
+		aboutDialog.getDialogText()->AppendText(wxT("The about box was cancelled.\n"));
+	else
+		aboutDialog.getDialogText()->AppendText(aboutDialog.GetText());
 }
 
 void BasicFrame::OnExit(wxCommandEvent & event)

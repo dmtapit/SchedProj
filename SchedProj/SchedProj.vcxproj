@@ -130,10 +130,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BasicDialog.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="CellSheet.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BasicDialog.cpp" />
     <ClCompile Include="CellSheet.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
