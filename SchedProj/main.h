@@ -32,13 +32,15 @@ public:
 	void OnAbout(wxCommandEvent & event);
 	void OnExit(wxCommandEvent & event);
 	void OnChooseFont(wxCommandEvent & event);
+	void OnChooseDir(wxCommandEvent & event);
 
 	DECLARE_EVENT_TABLE() // Alert the compiler that this class will have an event table
 };
 
 enum {
-	BASIC_EXIT = 1,
-	BASIC_OPEN = 100,
-	BASIC_ABOUT = 200,
-	BASIC_FONT = 300
+	BASIC_EXIT = wxID_HIGHEST + 1,
+	BASIC_OPEN,
+	BASIC_ABOUT,
+	BASIC_FONT,
+	BASIC_DIR
 };

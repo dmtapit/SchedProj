@@ -33,6 +33,7 @@ BasicFrame::BasicFrame(const wxChar *title, int xpos, int ypos, int width, int h
 	fileMenu->Append(BASIC_OPEN, wxT("&Open File"), wxT("Open an existing file"));
 	fileMenu->Append(BASIC_ABOUT, wxT("&About"), wxT("Who wrote this!"));
 	fileMenu->Append(BASIC_FONT, wxT("&Font"), wxT("Change the damn font!"));
+	fileMenu->Append(BASIC_DIR, wxT("&Choose Folder"),  wxT("Choose a directory."));
 	fileMenu->AppendSeparator();
 	fileMenu->Append(BASIC_EXIT, wxT("E&xit"), wxT("Stop wasting time."));
 
@@ -49,6 +50,7 @@ BEGIN_EVENT_TABLE (BasicFrame, wxFrame)
 	EVT_MENU (BASIC_ABOUT, BasicFrame::OnAbout)
 	EVT_MENU (BASIC_EXIT, BasicFrame::OnExit)
 	EVT_MENU (BASIC_FONT, BasicFrame::OnChooseFont)
+	EVT_MENU (BASIC_DIR, BasicFrame::OnChooseDir)
 END_EVENT_TABLE()
 
 void BasicFrame::OnOpenFile(wxCommandEvent & event)
@@ -102,4 +104,15 @@ void BasicFrame::OnChooseFont(wxCommandEvent & event)
 		theText->SetFont(theFont);
 		theText->SetForegroundColour(fontData.GetColour());
 	}
+}
+
+void BasicFrame::OnChooseDir(wxCommandEvent & event)
+{
+	wxDirDialog *d = new wxDirDialog(this, wxT("Choose a directory"), "", 0, wxDefaultPosition);
+
+	if (d->ShowModal() == wxID_OK)
+	{
+		SetCurrentDirectory(d->GetPath());
+	}
+
 }
