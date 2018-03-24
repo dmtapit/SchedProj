@@ -1,5 +1,6 @@
 #include "ProgramLoader.h"
 #include "BasicFrame.h"
+#include "CellSheet.h"
 
 ProgramLoader::ProgramLoader(const wxChar *title, int xpos, int ypos, int width, int height)
 	: wxFrame((wxFrame*)NULL, -1, title, wxPoint(xpos, ypos), wxSize(width, height))
@@ -19,12 +20,13 @@ ProgramLoader::ProgramLoader(const wxChar *title, int xpos, int ypos, int width,
 
 	wxPanel *panel = new wxPanel(this, -1);
 	
-	wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
+	wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
 	
 	btnPanel = new ButtonPanel(panel);
-	hbox->Add(btnPanel, 2, wxEXPAND | wxRIGHT, 10);
+	vbox->Add(btnPanel, 3, wxEXPAND | wxALL, 20);
 
-	panel->SetSizer(hbox);
+	panel->SetSizer(vbox);
+	//btnPanel->SetSizer(vbox); // Interesting result
 
 	Center();
 }
@@ -44,10 +46,15 @@ ButtonPanel::ButtonPanel(wxPanel * parent) : wxPanel(parent, wxID_ANY)
 	wxBoxSizer *vbox = new wxBoxSizer(wxVERTICAL);
 
 	btn_Basic = new wxButton(this, BASIC_APPLICATION, wxT("Basic Application"));
+	btn_CellSheet = new wxButton(this, CELL_SHEET, wxT("Cell Sheet Application"));
+	btn_unused_slot02 = new wxButton(this, -1, wxT("UNUSED BUTTON SLOT 02"));
 
 	Connect(BASIC_APPLICATION, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnBasicDialog));
+	Connect(CELL_SHEET, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnCellDialog));
 
 	vbox->Add(btn_Basic);
+	vbox->Add(btn_CellSheet);
+	vbox->Add(btn_unused_slot02);
 
 	SetSizer(vbox);
 }
@@ -60,4 +67,10 @@ void ButtonPanel::OnBasicDialog(wxCommandEvent& event)
 {
 	BasicFrame *frame = new BasicFrame(wxT("BASIC APP"), 50, 50, 450, 300);
 	frame->Show(true);
+}
+
+void ButtonPanel::OnCellDialog(wxCommandEvent& event)
+{
+	CellSheet *cs = new CellSheet(wxT("Cell Sheet"));
+	cs->Show(true);
 }

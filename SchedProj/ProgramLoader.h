@@ -7,12 +7,17 @@ public:
 	ButtonPanel(wxPanel *parent);
 
 	void OnBasicDialog(wxCommandEvent& event);
+	void OnCellDialog(wxCommandEvent& event);
 
 	wxButton *btn_Basic;
+	wxButton *btn_CellSheet;
+	wxButton *btn_unused_slot02;
+
 };
 
 enum {
-	BASIC_APPLICATION = wxID_HIGHEST + 1
+	BASIC_APPLICATION = wxID_HIGHEST + 1,
+	CELL_SHEET
 };
 
 class ProgramLoader : public wxFrame

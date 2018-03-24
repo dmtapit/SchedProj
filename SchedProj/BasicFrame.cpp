@@ -65,8 +65,14 @@ void BasicFrame::OnOpenFile(wxCommandEvent & event)
 void BasicFrame::OnSaveFile(wxCommandEvent & event)
 {
 	wxString path;
-	theText->SaveFile(path);
-	SetStatusText("Saved current file.", 1);
+	if (path == "") // If file has not been Saved As... to a file name/path yet...
+	{
+		SetStatusText("Need to choose a file location to save in.");
+	}
+	else {
+		theText->SaveFile(path);
+		SetStatusText("Saved current file.", 1);
+	}
 }
 
 void BasicFrame::OnSaveFileAs(wxCommandEvent & event)
