@@ -1,4 +1,5 @@
 #include "main.h"
+#include "ProgramLoader.h"
 #include "BasicFrame.h"
 
 //#include "CellSheet.h"
@@ -11,12 +12,16 @@ bool SchedProjApp::OnInit()
 	//cs->Show(true);
 
 	wxString appTitle = TITLE;
-	appTitle.Append(ABOUT);
+	//appTitle.Append(ABOUT);
 
-	BasicFrame *frame = new BasicFrame(appTitle, 50, 50, 450, 300);
-	frame->Show(true);
+	//BasicFrame *frame = new BasicFrame(appTitle, 50, 50, 450, 300);
+	//frame->Show(true);
 
-	SetTopWindow(frame);
+	ProgramLoader *pl = new ProgramLoader(wxT("CHOOSE A PROGRAM TO LOAD"), 50, 50, 450, 300);
+	pl->Show(true);
+
+
+	SetTopWindow(pl);
 	
 	return true;
 }
