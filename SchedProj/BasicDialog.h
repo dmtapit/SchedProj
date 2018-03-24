@@ -13,9 +13,6 @@ public:
 	wxTextCtrl * dialogText;
 	wxString GetText();
 
-
-	wxTextCtrl * getDialogText() { return dialogText; }
-
 private:
 	void OnOk(wxCommandEvent & event);
 

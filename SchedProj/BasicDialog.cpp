@@ -26,6 +26,8 @@ BasicDialog::BasicDialog(wxWindow * parent, wxWindowID id, const wxString & titl
 	wxButton * b = new wxButton(this, wxID_OK, wxT("OK"), p, wxDefaultSize);
 	p.x += 110;
 	wxButton * c = new wxButton(this, wxID_CANCEL, wxT("Cancel"), p, wxDefaultSize);
+
+	//dialogText->AppendText(wxT("Cool"));
 }
 
 void BasicDialog::OnOk(wxCommandEvent & event)
