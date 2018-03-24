@@ -19,6 +19,8 @@ public:
 	void OnSaveFile(wxCommandEvent & event);
 	void OnSaveFileAs(wxCommandEvent & event);
 
+	//void OnNewFrame(wxCommandEvent & event);
+
 	DECLARE_EVENT_TABLE() // Alert the compiler that this class will have an event table
 };
 

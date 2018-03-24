@@ -1,7 +1,7 @@
 #pragma once
 #include <wx/wx.h>
 
-static const wxChar *TITLE = wxT("Title of the App Under Construction");
+static const wxChar *TITLE = wxT("BASIC APPLICATION");
 static const wxChar *FILETYPES = wxT(
 	"Text files|*.txt|"
 	"C/C++ source files|*.cpp;*.cc;*.c|"
@@ -11,7 +11,9 @@ static const wxChar *FILETYPES = wxT(
 	"Hypertext markup files|*html;*htm;*HTML;*HTM|"
 	"All files|*.*"
 );
-static const wxChar *AUTHOR = wxT("Dean Tapit [3/22/2018]");
+static const wxChar *AUTHOR = wxT("Dean Tapit [3/24/2018]");
+static const wxChar *ABOUT = wxT(" - Learning some wxWidgets basics from wiki.wxwidgets.org");
+
 
 class SchedProjApp : public wxApp
 {

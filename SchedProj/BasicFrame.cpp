@@ -128,6 +128,7 @@ aboutDialog.ShowModal();
 }
 */
 
+//** This is not working as intended. Where is the logical problem? (Want to append the text, but can't...)
 void BasicFrame::OnAbout(wxCommandEvent & event)
 {
 	BasicDialog aboutDialog(this, -1, wxT("Basic Dialog"), wxPoint(100, 100), wxSize(200, 200));
@@ -143,3 +144,16 @@ void BasicFrame::OnExit(wxCommandEvent & event)
 {
 	Close(true);
 }
+
+
+/*To be continued from "Creating other frames unfinished tutorial"
+void BasicFrame::OnNewFrame(wxCommandEvent & event)
+{
+	wxString theTitle;
+	theTitle = wxGetTextFromUser(wxT("Enter a title"), wxT("Input text"), wxT("NO NAME"), this, -1, -1, true);
+
+	BasicFrame * win = new BasicFrame(theTitle, 150, 150, 450, 300);
+	windowList->Append(win);
+	win->Show(true);
+}
+*/

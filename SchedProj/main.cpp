@@ -10,9 +10,13 @@ bool SchedProjApp::OnInit()
 	//CellSheet *cs = new CellSheet(wxT("CellSheet"));
 	//cs->Show(true);
 
-	BasicFrame *frame = new BasicFrame(wxT("Basic"), 50, 50, 450, 300);
+	wxString appTitle = TITLE;
+	appTitle.Append(ABOUT);
 
+	BasicFrame *frame = new BasicFrame(appTitle, 50, 50, 450, 300);
 	frame->Show(true);
+
 	SetTopWindow(frame);
+	
 	return true;
 }
