@@ -30,6 +30,8 @@ BasicFrame::BasicFrame(const wxChar *title, int xpos, int ypos, int width, int h
 	menuBar->Append(fileMenu, wxT("&File"));
 	SetMenuBar(menuBar);
 	CreateStatusBar(3);
+
+	Center();
 }
 
 BasicFrame::~BasicFrame() {}

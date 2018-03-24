@@ -10,6 +10,7 @@ public:
 		const wxSize & size = wxDefaultSize,
 		long style = wxDEFAULT_DIALOG_STYLE);
 
+	virtual bool Validate();
 	wxTextCtrl * dialogText;
 	wxString GetText();
 
