@@ -9,7 +9,7 @@ ProgramLoader::ProgramLoader(const wxChar *title, int xpos, int ypos, int width,
 	fileMenu = (wxMenu *)NULL;
 
 	fileMenu = new wxMenu;
-	fileMenu->Append(LOAD_PROGRAM, wxT("Initiate a program"), wxT("Choose from a selection of programs"));
+	fileMenu->Append(QUIT_PROGRAM, wxT("Close Program Loader"), wxT("This won't close any other open applications."));
 
 	menuBar = new wxMenuBar;
 	menuBar->Append(fileMenu, wxT("&File"));
@@ -32,13 +32,12 @@ ProgramLoader::ProgramLoader(const wxChar *title, int xpos, int ypos, int width,
 }
 
 BEGIN_EVENT_TABLE(ProgramLoader, wxFrame)
-EVT_MENU(LOAD_PROGRAM, ProgramLoader::OnLoadProgram)
+EVT_MENU(QUIT_PROGRAM, ProgramLoader::OnQuit)
 END_EVENT_TABLE()
 
-void ProgramLoader::OnLoadProgram(wxCommandEvent & event)
+void ProgramLoader::OnQuit(wxCommandEvent & event)
 {
-	
-	
+	Close(true);
 }
 
 ButtonPanel::ButtonPanel(wxPanel * parent) : wxPanel(parent, wxID_ANY)
@@ -47,14 +46,15 @@ ButtonPanel::ButtonPanel(wxPanel * parent) : wxPanel(parent, wxID_ANY)
 
 	btn_Basic = new wxButton(this, BASIC_APPLICATION, wxT("Basic Application"));
 	btn_CellSheet = new wxButton(this, CELL_SHEET, wxT("Cell Sheet Application"));
-	btn_unused_slot02 = new wxButton(this, -1, wxT("UNUSED BUTTON SLOT 02"));
+	btn_PanelList = new wxButton(this, PANEL_LIST, wxT("Panel List Application"));
 
 	Connect(BASIC_APPLICATION, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnBasicDialog));
 	Connect(CELL_SHEET, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnCellDialog));
+	Connect(PANEL_LIST, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnPanelDialog));
 
 	vbox->Add(btn_Basic);
 	vbox->Add(btn_CellSheet);
-	vbox->Add(btn_unused_slot02);
+	vbox->Add(btn_PanelList);
 
 	SetSizer(vbox);
 }
@@ -73,4 +73,9 @@ void ButtonPanel::OnCellDialog(wxCommandEvent& event)
 {
 	CellSheet *cs = new CellSheet(wxT("Cell Sheet"));
 	cs->Show(true);
+}
+
+void ButtonPanel::OnPanelDialog(wxCommandEvent& event)
+{
+
 }

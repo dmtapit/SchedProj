@@ -33,12 +33,12 @@ void CellSheet::OnQuit(wxCommandEvent& event)
 Grid::Grid(wxNotebook *parent) : wxGrid(parent, wxID_ANY)
 {
 	CreateGrid(10, 10);
-	SetRowLabelSize(25);
-	SetColLabelSize(12);
+	SetRowLabelSize(40);
+	SetColLabelSize(20);
 	SetRowLabelAlignment(wxALIGN_RIGHT, wxALIGN_CENTRE);
 	SetLabelFont(wxFont(9, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD));
-
+	
 	for (int i = 0; i < 10; i++) {
-		this->SetRowSize(i, 12);
+		this->SetRowSize(i, 20);
 	}
 }

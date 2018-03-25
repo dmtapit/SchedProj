@@ -17,7 +17,7 @@ bool SchedProjApp::OnInit()
 	//BasicFrame *frame = new BasicFrame(appTitle, 50, 50, 450, 300);
 	//frame->Show(true);
 
-	ProgramLoader *pl = new ProgramLoader(wxT("CHOOSE A PROGRAM TO LOAD"), 50, 50, 450, 300);
+	ProgramLoader *pl = new ProgramLoader(wxT("CHOOSE A PROGRAM TO LOAD"), 50, 50, 600, 300);
 	pl->Show(true);
 
 

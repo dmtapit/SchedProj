@@ -8,16 +8,18 @@ public:
 
 	void OnBasicDialog(wxCommandEvent& event);
 	void OnCellDialog(wxCommandEvent& event);
+	void OnPanelDialog(wxCommandEvent& event);
 
 	wxButton *btn_Basic;
 	wxButton *btn_CellSheet;
-	wxButton *btn_unused_slot02;
+	wxButton *btn_PanelList;
 
 };
 
 enum {
 	BASIC_APPLICATION = wxID_HIGHEST + 1,
-	CELL_SHEET
+	CELL_SHEET,
+	PANEL_LIST
 };
 
 class ProgramLoader : public wxFrame
@@ -28,7 +30,7 @@ public:
 	wxMenuBar *menuBar;
 	wxMenu *fileMenu;
 
-	void OnLoadProgram(wxCommandEvent& event);
+	void OnQuit(wxCommandEvent& event);
 
 	ButtonPanel *btnPanel;
 
@@ -36,5 +38,5 @@ public:
 };
 
 enum {
-	LOAD_PROGRAM = wxID_HIGHEST + 1
+	QUIT_PROGRAM = wxID_HIGHEST + 1
 };
