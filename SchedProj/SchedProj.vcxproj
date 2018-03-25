@@ -131,6 +131,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BasicDialog.h" />
+    <ClInclude Include="BasicDrawPane.h" />
     <ClInclude Include="BasicFrame.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="CellSheet.h" />
@@ -138,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicDialog.cpp" />
+    <ClCompile Include="BasicDrawPane.cpp" />
     <ClCompile Include="BasicFrame.cpp" />
     <ClCompile Include="CellSheet.cpp" />
     <ClCompile Include="main.cpp" />

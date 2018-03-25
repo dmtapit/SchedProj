@@ -1,6 +1,7 @@
 #include "ProgramLoader.h"
 #include "BasicFrame.h"
 #include "CellSheet.h"
+#include "BasicDrawPane.h"
 
 ProgramLoader::ProgramLoader(const wxChar *title, int xpos, int ypos, int width, int height)
 	: wxFrame((wxFrame*)NULL, -1, title, wxPoint(xpos, ypos), wxSize(width, height))
@@ -46,15 +47,15 @@ ButtonPanel::ButtonPanel(wxPanel * parent) : wxPanel(parent, wxID_ANY)
 
 	btn_Basic = new wxButton(this, BASIC_APPLICATION, wxT("Basic Application"));
 	btn_CellSheet = new wxButton(this, CELL_SHEET, wxT("Cell Sheet Application"));
-	btn_PanelList = new wxButton(this, PANEL_LIST, wxT("Panel List Application"));
+	btn_PanelDraw = new wxButton(this, PANEL_DRAW, wxT("Panel List Application"));
 
 	Connect(BASIC_APPLICATION, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnBasicDialog));
 	Connect(CELL_SHEET, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnCellDialog));
-	Connect(PANEL_LIST, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnPanelDialog));
+	Connect(PANEL_DRAW, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnPanelDrawDialog));
 
 	vbox->Add(btn_Basic);
 	vbox->Add(btn_CellSheet);
-	vbox->Add(btn_PanelList);
+	vbox->Add(btn_PanelDraw);
 
 	SetSizer(vbox);
 }
@@ -75,7 +76,16 @@ void ButtonPanel::OnCellDialog(wxCommandEvent& event)
 	cs->Show(true);
 }
 
-void ButtonPanel::OnPanelDialog(wxCommandEvent& event)
+void ButtonPanel::OnPanelDrawDialog(wxCommandEvent& event)
 {
+	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
+	wxFrame * frame = new wxFrame((wxFrame *)NULL, -1, wxT("Hello wxDC"), wxPoint(50, 50), wxSize(800, 600));
 
+	BasicDrawPane * drawPane = new BasicDrawPane((wxFrame*)frame);
+	sizer->Add(drawPane, 1, wxEXPAND);
+
+	frame->SetSizer(sizer);
+	frame->SetAutoLayout(true);
+
+	frame->Show();
 }

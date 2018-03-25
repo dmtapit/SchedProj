@@ -8,18 +8,18 @@ public:
 
 	void OnBasicDialog(wxCommandEvent& event);
 	void OnCellDialog(wxCommandEvent& event);
-	void OnPanelDialog(wxCommandEvent& event);
+	void OnPanelDrawDialog(wxCommandEvent& event);
 
 	wxButton *btn_Basic;
 	wxButton *btn_CellSheet;
-	wxButton *btn_PanelList;
+	wxButton *btn_PanelDraw;
 
 };
 
 enum {
 	BASIC_APPLICATION = wxID_HIGHEST + 1,
 	CELL_SHEET,
-	PANEL_LIST
+	PANEL_DRAW
 };
 
 class ProgramLoader : public wxFrame
