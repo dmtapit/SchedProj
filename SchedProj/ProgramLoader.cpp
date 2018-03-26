@@ -48,14 +48,17 @@ ButtonPanel::ButtonPanel(wxPanel * parent) : wxPanel(parent, wxID_ANY)
 	btn_Basic = new wxButton(this, BASIC_APPLICATION, wxT("Basic Application"));
 	btn_CellSheet = new wxButton(this, CELL_SHEET, wxT("Cell Sheet Application"));
 	btn_PanelDraw = new wxButton(this, PANEL_DRAW, wxT("Panel List Application"));
+	btn_EmployeeList = new wxButton(this, EMPLOYEE_LIST, wxT("Employee List Application"));
 
 	Connect(BASIC_APPLICATION, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnBasicDialog));
 	Connect(CELL_SHEET, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnCellDialog));
 	Connect(PANEL_DRAW, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnPanelDrawDialog));
+	Connect(EMPLOYEE_LIST, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnEmployeeListDialog));
 
 	vbox->Add(btn_Basic);
 	vbox->Add(btn_CellSheet);
 	vbox->Add(btn_PanelDraw);
+	vbox->Add(btn_EmployeeList);
 
 	SetSizer(vbox);
 }
@@ -88,4 +91,9 @@ void ButtonPanel::OnPanelDrawDialog(wxCommandEvent& event)
 	frame->SetAutoLayout(true);
 
 	frame->Show();
+}
+
+void ButtonPanel::OnEmployeeListDialog(wxCommandEvent& event)
+{
+
 }
