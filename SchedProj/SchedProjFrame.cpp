@@ -6,7 +6,7 @@
 //////////////////////////
 
 // frame constructor
-SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, title)
+SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(600, 500))
 {
 	// set the frame icon
 	SetIcon(wxICON(szs));
@@ -14,13 +14,11 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 #if wxUSE_MENUS
 	// create a menu bar
 	wxMenu *fileMenu = new wxMenu;
-
-	// separate help menu for "About"
-	wxMenu *helpMenu = new wxMenu;
-	helpMenu->Append(Minimal_About, "&About\tF1", "Show about dialog");
-
 	fileMenu->Append(Minimal_Quit, "E&xit\tAlt-X", "Quit this program");
 
+	wxMenu *helpMenu = new wxMenu;
+	helpMenu->Append(Minimal_About, "&About\tF1", "Show about dialog");
+	
 	wxMenuBar *menuBar = new wxMenuBar();
 	menuBar->Append(fileMenu, "&File");
 	menuBar->Append(helpMenu, "&Help");
@@ -39,6 +37,8 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 	CreateStatusBar(2);
 	SetStatusText("Sched Proj App: Welcome!");
 #endif // wxUSE_STATUSBAR
+
+	Center(); // Centers the window frame to the center of the screen/monitor
 }
 
 // Event tables and other macros for wxWidgets

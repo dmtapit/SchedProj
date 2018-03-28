@@ -11,7 +11,7 @@ static const wxChar *FILETYPES = wxT(
 	"Hypertext markup files|*html;*htm;*HTML;*HTM|"
 	"All files|*.*"
 );
-static const wxChar *AUTHOR = wxT("Dean Tapit - Last modified: [3/27/2018]");
+static const wxChar *AUTHOR = wxT("Dean Tapit (c) Mar 2018");
 static const wxChar *ABOUT = wxT(" - Learning some wxWidgets basics from wiki.wxwidgets.org");
 
 static const wxChar *VERSION = wxT("0.0.0.1");
