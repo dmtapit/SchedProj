@@ -136,6 +136,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="CellSheet.h" />
     <ClInclude Include="ProgramLoader.h" />
+    <ClInclude Include="SchedProjFrame.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicDialog.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="CellSheet.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ProgramLoader.cpp" />
+    <ClCompile Include="SchedProjFrame.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -33,6 +33,9 @@
     <ClInclude Include="BasicDrawPane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SchedProjFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BasicDrawPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SchedProjFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

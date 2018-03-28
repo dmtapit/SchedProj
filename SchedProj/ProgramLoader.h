@@ -9,12 +9,12 @@ public:
 	void OnBasicDialog(wxCommandEvent& event);
 	void OnCellDialog(wxCommandEvent& event);
 	void OnPanelDrawDialog(wxCommandEvent& event);
-	void OnEmployeeListDialog(wxCommandEvent& event);
+	void OnSchedProjDialog(wxCommandEvent& event);
 
 	wxButton *btn_Basic;
 	wxButton *btn_CellSheet;
 	wxButton *btn_PanelDraw;
-	wxButton *btn_EmployeeList;
+	wxButton *btn_SchedProj;
 
 };
 
@@ -22,7 +22,7 @@ enum {
 	BASIC_APPLICATION = wxID_HIGHEST + 1,
 	CELL_SHEET,
 	PANEL_DRAW,
-	EMPLOYEE_LIST
+	SCHED_PROJ
 };
 
 class ProgramLoader : public wxFrame

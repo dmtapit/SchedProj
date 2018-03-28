@@ -2,6 +2,7 @@
 #include "BasicFrame.h"
 #include "CellSheet.h"
 #include "BasicDrawPane.h"
+#include "SchedProjFrame.h"
 
 ProgramLoader::ProgramLoader(const wxChar *title, int xpos, int ypos, int width, int height)
 	: wxFrame((wxFrame*)NULL, -1, title, wxPoint(xpos, ypos), wxSize(width, height))
@@ -10,7 +11,7 @@ ProgramLoader::ProgramLoader(const wxChar *title, int xpos, int ypos, int width,
 	fileMenu = (wxMenu *)NULL;
 
 	fileMenu = new wxMenu;
-	fileMenu->Append(QUIT_PROGRAM, wxT("Close Program Loader"), wxT("This won't close any other open applications."));
+	fileMenu->Append(QUIT_PROGRAM, wxT("&Close Program Loader\tAlt-C"), wxT("This won't close any other open applications."));
 
 	menuBar = new wxMenuBar;
 	menuBar->Append(fileMenu, wxT("&File"));
@@ -36,6 +37,7 @@ BEGIN_EVENT_TABLE(ProgramLoader, wxFrame)
 EVT_MENU(QUIT_PROGRAM, ProgramLoader::OnQuit)
 END_EVENT_TABLE()
 
+
 void ProgramLoader::OnQuit(wxCommandEvent & event)
 {
 	Close(true);
@@ -48,17 +50,17 @@ ButtonPanel::ButtonPanel(wxPanel * parent) : wxPanel(parent, wxID_ANY)
 	btn_Basic = new wxButton(this, BASIC_APPLICATION, wxT("Basic Application"));
 	btn_CellSheet = new wxButton(this, CELL_SHEET, wxT("Cell Sheet Application"));
 	btn_PanelDraw = new wxButton(this, PANEL_DRAW, wxT("Panel List Application"));
-	btn_EmployeeList = new wxButton(this, EMPLOYEE_LIST, wxT("Employee List Application"));
+	btn_SchedProj = new wxButton(this, SCHED_PROJ, wxT("Sched Proj Application"));
 
 	Connect(BASIC_APPLICATION, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnBasicDialog));
 	Connect(CELL_SHEET, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnCellDialog));
 	Connect(PANEL_DRAW, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnPanelDrawDialog));
-	Connect(EMPLOYEE_LIST, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnEmployeeListDialog));
+	Connect(SCHED_PROJ, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ButtonPanel::OnSchedProjDialog));
 
 	vbox->Add(btn_Basic);
 	vbox->Add(btn_CellSheet);
 	vbox->Add(btn_PanelDraw);
-	vbox->Add(btn_EmployeeList);
+	vbox->Add(btn_SchedProj);
 
 	SetSizer(vbox);
 }
@@ -93,7 +95,8 @@ void ButtonPanel::OnPanelDrawDialog(wxCommandEvent& event)
 	frame->Show();
 }
 
-void ButtonPanel::OnEmployeeListDialog(wxCommandEvent& event)
+void ButtonPanel::OnSchedProjDialog(wxCommandEvent& event)
 {
-
+	SchedProjFrame *spf = new SchedProjFrame(wxT("SchedProj"));
+	spf->Show(true);
 }

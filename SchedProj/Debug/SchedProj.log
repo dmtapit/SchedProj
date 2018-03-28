@@ -1,6 +1,9 @@
-﻿  ProgramLoader.cpp
+﻿  SchedProjFrame.cpp
+  ProgramLoader.cpp
   Generating Code...
   Compiling...
   main.cpp
+  BasicFrame.cpp
+  BasicDialog.cpp
   Generating Code...
   SchedProj.vcxproj -> C:\Users\Dean Tapit\source\repos\SchedProj\Debug\SchedProj.exe
