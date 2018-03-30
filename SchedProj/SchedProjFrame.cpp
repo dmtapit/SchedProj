@@ -8,9 +8,6 @@
 // frame constructor
 SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(600, 500))
 {
-	// set the frame icon
-	SetIcon(wxICON(szs));
-
 #if wxUSE_MENUS
 	// create a menu bar
 	wxMenu *fileMenu = new wxMenu;
