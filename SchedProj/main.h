@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////
+// Program:		SchedProj
+// Name:		main.h
+// Author:		Dean Tapit
+// Last Edit:	3/31/18
+// Info:		Based off some wxWidgets tutorials on the wiki
+//			Contains the wxApp constructor.
+//			Also contains various const variables.
+///////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include <wx/wx.h>
 

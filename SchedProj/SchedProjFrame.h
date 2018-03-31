@@ -1,8 +1,15 @@
+///////////////////////////////////////////////////////////////////////
+// Program:		SchedProj
+// Name:		SchedProjFrame.h
+// Author:		Dean Tapit
+// Last Edit:	3/31/18
+// Info:		Based off some wxWidgets tutorials on the wiki
+//			This is the MAIN FRAME code for Sched Project.
+//			Based off of minimal.cpp sample code.
+///////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include <wx/wx.h>
-
-//  This is the MAIN FRAME code for Sched Project. Can move to a separate file if you want later.  //
-//  Based off of minimal.cpp sample code.
 
 class SchedProjFrame : public wxFrame
 {
