@@ -14,7 +14,7 @@ static const wxChar *FILETYPES = wxT(
 static const wxChar *AUTHOR = wxT("Dean Tapit (c) Mar 2018");
 static const wxChar *ABOUT = wxT(" - Learning some wxWidgets basics from wiki.wxwidgets.org");
 
-static const wxChar *VERSION = wxT("0.0.0.1");
+static const wxChar *VERSION = wxT("0.0.0.2");
 
 class SchedProjApp : public wxApp
 {

@@ -11,6 +11,8 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 #if wxUSE_MENUS
 	// create a menu bar
 	wxMenu *fileMenu = new wxMenu;
+	fileMenu->Append(ON_NEW_LIST, "&New List\tAlt-N", "Create a new list");
+	fileMenu->AppendSeparator();
 	fileMenu->Append(Minimal_Quit, "E&xit\tAlt-X", "Quit this program");
 
 	wxMenu *helpMenu = new wxMenu;
@@ -42,6 +44,8 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 wxBEGIN_EVENT_TABLE(SchedProjFrame, wxFrame)
 	EVT_MENU(Minimal_Quit, SchedProjFrame::OnQuit)
 	EVT_MENU(Minimal_About, SchedProjFrame::OnAbout)
+
+	EVT_MENU(ON_NEW_LIST, SchedProjFrame::OnNewList)
 wxEND_EVENT_TABLE()
 
 
@@ -66,4 +70,9 @@ void SchedProjFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 		"%s", VERSION, wxGetOsDescription(), AUTHOR
 	),
 		"About SchedProj App", wxOK | wxICON_INFORMATION, this);
+}
+
+void SchedProjFrame::OnNewList(wxCommandEvent& event)
+{
+
 }
