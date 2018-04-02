@@ -135,8 +135,10 @@
     <ClInclude Include="BasicFrame.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="CellSheet.h" />
+    <ClInclude Include="NotebookSoul.h" />
     <ClInclude Include="ProgramLoader.h" />
     <ClInclude Include="SchedProjFrame.h" />
+    <ClInclude Include="SoulPage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicDialog.cpp" />
@@ -144,8 +146,10 @@
     <ClCompile Include="BasicFrame.cpp" />
     <ClCompile Include="CellSheet.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NotebookSoul.cpp" />
     <ClCompile Include="ProgramLoader.cpp" />
     <ClCompile Include="SchedProjFrame.cpp" />
+    <ClCompile Include="SoulPage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

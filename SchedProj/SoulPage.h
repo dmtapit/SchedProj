@@ -12,10 +12,15 @@
 #include <wx/wx.h>
 #include <wx/treebook.h>
 
+#define ICON_SIZE	16
+
 class SoulPage : public wxPanel
 {
 public:
 	SoulPage(wxTreebook *book, wxImageList *imaglist, const char *const icon[]);
+
+protected:
+
 
 
 };

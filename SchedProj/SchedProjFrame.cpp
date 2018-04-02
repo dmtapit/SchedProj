@@ -8,8 +8,10 @@
 //			Based off of minimal.cpp sample code.
 ///////////////////////////////////////////////////////////////////////
 
-#include "SchedProjFrame.h"
 #include "main.h"
+#include "SchedProjFrame.h"
+
+#include "SoulPage.h"
 
 //////////////////////////
 // MAIN FRAME
@@ -84,5 +86,5 @@ void SchedProjFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
 void SchedProjFrame::OnNewList(wxCommandEvent& event)
 {
-
+	//SoulPage = new SoulPage();
 }

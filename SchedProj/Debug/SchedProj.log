@@ -1,6 +1,4 @@
-﻿  BasicDialog.cpp
-  BasicFrame.cpp
-  SchedProjFrame.cpp
-  main.cpp
+﻿  NotebookSoul.cpp
+  SoulPage.cpp
   Generating Code...
   SchedProj.vcxproj -> C:\Users\Dean Tapit\source\repos\SchedProj\Debug\SchedProj.exe
