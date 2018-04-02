@@ -17,6 +17,9 @@ public:
 	// ctor(s) (constructors)
 	SchedProjFrame(const wxString& title);
 
+	// dtor(s) (destructors)
+	virtual ~SchedProjFrame();
+
 	// event handlers (these functions should not be virtual)
 	void OnQuit(wxCommandEvent& event);
 	void OnAbout(wxCommandEvent& event);
