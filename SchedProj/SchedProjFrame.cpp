@@ -18,6 +18,13 @@
 // If one does not want to use separate header(.h) and main(.cpp) files, can probably
 // just combine both; so, all the SchedProjFrame.h would go above the code in SchedProjFrame.cpp
 
+// For Some Reason, putting this code in the header file results in:
+// SchedProjFrame.obj : error LNK2005: "wchar_t const * * TreebookCategories" (?TreebookCategories@@3PAPB_WA) already defined in ProgramLoader.obj
+// C:\Users\Dean Tapit\source\repos\SchedProj\Debug\SchedProj.exe : fatal error LNK1169: one or more multiply defined symbols found
+const wxChar *TreebookCategories[MAX_PAGES] = {
+	wxT("TREEBOOK_WHAT!?")
+};
+
 // An Array of Pages (although for this program, perhaps one page is needed for now...)
 WX_DEFINE_ARRAY_PTR(SoulPage *, ArrayWidgetsPage);
 
@@ -158,6 +165,7 @@ void SchedProjFrame::InitBook()
 #endif
 
 		// [Dean Tapit] PAGE INFO FOR LOOP; Will look into this later
+		// LOOKS LIKE YOU ARE GOING TO NEED THIS
 		//for ( )
 		//{
 
@@ -165,14 +173,67 @@ void SchedProjFrame::InitBook()
 
 		// [Dean Tapit] Might not need this page menu item...
 
-		GetMenuBar()->Append(menuPages, wxT("&Page"));
-
-		//m_book->AssignImageList(imageList);
-
-
 	}
 
+	GetMenuBar()->Append(menuPages, wxT("&Page"));
 
+	//m_book->AssignImageList(imageList);
+
+	for (cat = 0; cat < MAX_PAGES; cat++)
+	{
+#if USE_TREEBOOK
+		m_book->AddPage(NULL, TreebookCategories[cat], false, 0);
+#else
+
+#endif
+
+		// now do add them [Dean Tapit] Do I need to do this for my purposes??
+		size_t count = pages[cat].GetCount();
+		for (size_t n = 0; n < count; n++)
+		{
+#if USE_TREEBOOK
+			m_book->AddSubPage
+#else
+			books[cat]->AddPage
+#endif
+				(
+					pages[cat][n],
+					labels[cat][n],
+					false, // don't select
+					imageId++
+					)
+				;
+		}
+
+	}
+	
+	// No need for page change?
+
+/*
+	// What exactly does this do?
+	const bool pageSet = wxPersistentRegisterAndRestore(m_book);
+
+#if USE_TREEBOOK
+	// for treebook page #0 is empty parent page only so select the first page
+	// with some contents
+	if (!pageSet)
+		m_book->SetSelection(1);
+
+	// but ensure that the top of the tree is shown nevertheless
+	wxTreeCtrl * const tree = m_book->GetTreeCtrl();
+
+	wxTreeItemIdValue cookie;
+	tree->EnsureVisible(tree->GetFirstChild(tree->GetRootItem(), cookie));
+#else
+	if (!pageSet)
+	{
+		// for other books set selection twice to force connected event handler
+		// to force lazy creation of initiall visible content
+		m_book->SetSelection(1);
+		m_book->SetSelection(0);
+	}
+#endif // USE_TREEBOOK
+*/
 }
 
 SchedProjFrame::~SchedProjFrame()
