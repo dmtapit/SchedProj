@@ -2,7 +2,7 @@
 // Program:		SchedProj
 // Name:		SchedProjFrame.cpp
 // Author:		Dean Tapit
-// Last Edit:	4/1/18
+// Last Edit:	4/4/18
 // Info:		Based off some wxWidgets tutorials on the wiki
 //			This is the MAIN FRAME code for Sched Project.
 //			Based off of minimal.cpp sample code.
@@ -280,13 +280,46 @@ void SchedProjFrame::OnNewList(wxCommandEvent& event)
 	//SoulPage = new SoulPage();
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////
+void SchedProjFrame::OnEnable(wxCommandEvent& event)
+{
+	SchedProjPage::GetAttrs().m_enabled = event.IsChecked();
+
+	CurrentPage()->SetUpWidget();
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////
 // SchedProjPage
-//////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
 SchedProjPage::SchedProjPage(wxTreebook *book, wxImageList *imaglist, const char *const icon[])
 	: wxPanel(book, wxID_ANY, wxDefaultPosition, wxDefaultSize,
 		wxNO_FULL_REPAINT_ON_RESIZE | wxCLIP_CHILDREN | wxTAB_TRAVERSAL)
 {
 	//imaglist->Add(wxBitmap(wxImage(icon).Scale(ICON_SIZE, ICON_SIZE)));
+}
+
+/* static */
+SchedProjAttributes& SchedProjPage::GetAttrs()
+{
+	static SchedProjAttributes s_attrs;
+
+	return s_attrs;
+}
+
+void SchedProjPage::SetUpWidget()
+{
+	const Widgets widgets = GetWidgets();
+
+	for (Widgets::const_iterator it = widgets.begin();
+		it != widgets.end();
+		++it)
+	{
+		wxCHECK_RET(*it, "NULL widget");
+
+		// TODO more window variables?
+
+	}
 }

@@ -2,7 +2,7 @@
 // Program:		SchedProj
 // Name:		SchedProjFrame.h
 // Author:		Dean Tapit
-// Last Edit:	4/1/18
+// Last Edit:	4/4/18
 // Info:		Based off some wxWidgets tutorials on the wiki
 //			This is the MAIN FRAME code for Sched Project.
 //			Based off of "minimal.cpp" sample code.
@@ -53,10 +53,45 @@ enum
 	ON_NEW_LIST = wxID_HIGHEST + 1
 };
 
+typedef wxVector<wxWindow *> Widgets;
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// SchedProjPage: a book page demonstrating some widget (notebook.cpp to start...)
+//////////////////////////////////////////////////////////////////////////////////////////
+
+// struct to store common widget attributes
+struct SchedProjAttributes
+{
+	SchedProjAttributes()
+	{
+		m_enabled = true;
+	}
+
+	bool m_enabled;
+};
+
 class SchedProjPage : public wxPanel
 {
 public:
 	SchedProjPage(wxTreebook *book, wxImageList *imaglist, const char *const icon[]);
+	
+	// return the control shown by this page
+	virtual wxWindow *GetWidget() const = 0;
+
+	// some pages show additional controls, in this case override this one to
+	// return all of them (including the one returned by GetWidget())
+	virtual Widgets GetWidgets() const
+	{
+		Widgets widgets;
+		widgets.push_back(GetWidget());
+		return widgets;
+	}
+
+	// apply current attributes to the widget(s)
+	void SetUpWidget();
+
+	// the default attributes for the widget
+	static SchedProjAttributes& GetAttrs();
 
 protected:
 
@@ -67,7 +102,7 @@ protected:
 
 ///////////////////////////////////////////////////////////////////////
 //
-// MAIN FRAME (Header file code)
+// MAIN FRAME (SchedProjFrame)
 //
 ///////////////////////////////////////////////////////////////////////
 
@@ -81,15 +116,19 @@ public:
 	virtual ~SchedProjFrame();
 
 	// event handlers (these functions should not be virtual)
-
+	// The frame menu commands
 	void OnQuit(wxCommandEvent& event);
 	void OnAbout(wxCommandEvent& event);
 	void OnNewList(wxCommandEvent& event); // This should aim to create a new list
+
+	void OnEnable(wxCommandEvent& event);
+
 
 	// initializing the book: add all pages to it
 	// [Dean Tapit: since this program really only wants to create a notebook, and not pages of widgets, this may change]
 	void InitBook();
 
+	// return the currently selected page (never NULL)
 	SchedProjPage *CurrentPage();
 
 private:
