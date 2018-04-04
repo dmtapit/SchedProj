@@ -78,7 +78,7 @@ public:
 	// return the control shown by this page
 	virtual wxWindow *GetWidget() const = 0;
 
-	// some pages show additional controls, in this case override this one to
+	// some pages show additional controls, in this case override this one to 
 	// return all of them (including the one returned by GetWidget())
 	virtual Widgets GetWidgets() const
 	{
