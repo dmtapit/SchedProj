@@ -89,6 +89,17 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 	wxButton *btn;
 
 	btn = new wxButton(m_panel, SchedProj_Quit, wxT("Exit"));
+	sizerBtns->Add(btn);
+	sizerDown->Add(sizerBtns, 0, wxALL | wxALIGN_RIGHT, 5);
+
+	// Putting everything together
+	sizerTop->Add(m_book, 1, wxGROW | (wxALL & ~(wxTOP | wxBOTTOM)), 10);
+	sizerTop->Add(0, 5, 0, wxGROW); // spacer in between
+	sizerTop->Add(sizerDown, 0, wxGROW | (wxALL & ~wxTOP), 10);
+
+	m_panel->SetSizer(sizerTop);
+
+
 
 #if wxUSE_STATUSBAR
 	CreateStatusBar(2);

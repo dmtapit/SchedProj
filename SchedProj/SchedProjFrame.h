@@ -69,7 +69,7 @@ private:
 	// the panel containing everything
 	wxPanel *m_panel;
 
-	// the book containing the test pages (the widgets); in SchedProj, just a notebook...?
+	// the book containing the test pages (the widgets); in SchedProj, just a notebook...?; a wxTreebook in actuality
 	SchedProjBookCtrl *m_book;
 
 	// any class wishing to process wxWidgets events must use this macro
