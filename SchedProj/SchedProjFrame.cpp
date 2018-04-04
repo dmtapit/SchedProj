@@ -13,6 +13,15 @@
 
 #include "SoulPage.h"
 
+#include "wx/persist/toplevel.h"
+
+// If one does not want to use separate header(.h) and main(.cpp) files, can probably
+// just combine both; so, all the SchedProjFrame.h would go above the code in SchedProjFrame.cpp
+
+// An Array of Pages (although for this program, perhaps one page is needed for now...)
+WX_DEFINE_ARRAY_PTR(SoulPage *, ArrayWidgetsPage);
+
+
 ///////////////////////////////////////////////////////////////////////
 // Event tables and other macros for wxWidgets
 ///////////////////////////////////////////////////////////////////////
@@ -31,6 +40,7 @@ wxEND_EVENT_TABLE()
 
 SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(600, 500))
 {
+	const bool sizeSet = wxPersistentRegisterAndRestore(this, "Main");
 
 	// set the frame icon
 	///	SetIcon(wxICON(sample));
@@ -99,7 +109,11 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 
 	m_panel->SetSizer(sizerTop);
 
-
+	// The code below uses a wxPersistentRegisterAndRestore which is from the library "wx/persist/toplevel.h"
+	const wxSize sizeMin = m_panel->GetBestSize();
+	if (!sizeSet)
+		SetClientSize(sizeMin);
+	SetMinClientSize(sizeMin);
 
 #if wxUSE_STATUSBAR
 	CreateStatusBar(2);
@@ -108,10 +122,57 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 
 	Center(); // Centers the window frame to the center of the screen/monitor
 }
-
+/*
+	MIGHT NOT NEED THIS SINCE WE ARE NOT REALLY CREATING A BOOK OF WIDGETS LIKE IN THE SAMPLE "widgets.cpp"
+	BUT RATHER JUST UTILIZE ONE OF THE WIDGETS...
+ */
 void SchedProjFrame::InitBook()
 {
-	// TODO
+	// [Dean Tapit] Not implementing the images as of now...
+	//wxImageList *imageList = new wxImageList(ICON_SIZE, ICON_SIZE);
+
+	//wxImage img(sample_xpm); // What is this, some form of ASCII ART???
+	//imageList->Add(wxBitmap(img.Scale(ICON_SIZE, ICON_SIZE)));
+
+#if !USE_TREEBOOK
+	SchedProjBookCtrl *books[MAX_PAGES];
+#endif
+
+	ArrayWidgetsPage pages[MAX_PAGES]; // Currently should be at '1' (check SchedProjFrame.h) since I only want one widget?
+	wxArrayString labels[MAX_PAGES];
+
+	wxMenu *menuPages = new wxMenu;
+	unsigned int nPage = 0;
+	int cat, imageId = 1;
+
+	// We need to first create all pages and only then add them to the book
+	// as we need the image list first
+	//
+	// we also construct the pages menu during this first iteration
+	for (cat = 0; cat < MAX_PAGES; cat++)
+	{
+#if USE_TREEBOOK
+		nPage++; // increase for parent page
+#else
+		// [Dean Tapit] I won't enter this code now since it will clutter my understanding of the code right now
+#endif
+
+		// [Dean Tapit] PAGE INFO FOR LOOP; Will look into this later
+		//for ( )
+		//{
+
+		//}
+
+		// [Dean Tapit] Might not need this page menu item...
+
+		GetMenuBar()->Append(menuPages, wxT("&Page"));
+
+		//m_book->AssignImageList(imageList);
+
+
+	}
+
+
 }
 
 SchedProjFrame::~SchedProjFrame()

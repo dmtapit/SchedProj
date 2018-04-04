@@ -6,7 +6,7 @@
 // Info:		Based off some wxWidgets tutorials on the wiki
 //			This is the MAIN FRAME code for Sched Project.
 //			Based off of "minimal.cpp" sample code.
-//			Some more code based from "widgets.h"
+//			Some more code based from "widgets.h" and "widgets.cpp"
 ///////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -17,6 +17,21 @@
 #define USE_TREEBOOK 1
 #define SchedProjBookCtrl wxTreebook
 #endif // wxUSE_TREEBOOK
+
+#define ICON_SIZE	16
+
+// INTRODUCING NEW PAGES DON'T FORGET TO ADD ENTRIES TOO 'WidgetCategories'
+// [Dean Tapit] I'm assuming that this means these enums are the labels for the pages
+// of the Treebook, where all the widgets can be chosen just as in sample "widgets.cpp"
+// My aim at the moment is to just open one widget: the notebook.cpp
+enum
+{
+	// [Dean Tapit] I still don't have a good grasp of most of the code in the "widgets.cpp"
+	// sample app.  It is quite interesting, though...
+	MAX_PAGES = 1
+};
+
+
 
 //////////////////////////////////////////////////////////////////
 // ID's for controls and menu commands
