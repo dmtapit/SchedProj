@@ -53,6 +53,18 @@ enum
 	ON_NEW_LIST = wxID_HIGHEST + 1
 };
 
+class SchedProjPage : public wxPanel
+{
+public:
+	SchedProjPage(wxTreebook *book, wxImageList *imaglist, const char *const icon[]);
+
+protected:
+
+};
+
+
+
+
 ///////////////////////////////////////////////////////////////////////
 //
 // MAIN FRAME (Header file code)
@@ -77,6 +89,8 @@ public:
 	// initializing the book: add all pages to it
 	// [Dean Tapit: since this program really only wants to create a notebook, and not pages of widgets, this may change]
 	void InitBook();
+
+	SchedProjPage *CurrentPage();
 
 private:
 	// the panel containing everything

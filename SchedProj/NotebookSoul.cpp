@@ -17,7 +17,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 NotebookSoulPage::NotebookSoulPage(wxTreebook *book, wxImageList *imaglist, const char *const icon[])
-	:SoulPage(book, imaglist, icon)
+	:SchedProjPage(book, imaglist, icon)
 {
 	// Initializing everything (the check/radio boxes, the notebook and sizer, and the image list
 	m_chkImages = NULL;

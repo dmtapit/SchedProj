@@ -138,7 +138,6 @@
     <ClInclude Include="NotebookSoul.h" />
     <ClInclude Include="ProgramLoader.h" />
     <ClInclude Include="SchedProjFrame.h" />
-    <ClInclude Include="SoulPage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicDialog.cpp" />
@@ -149,7 +148,6 @@
     <ClCompile Include="NotebookSoul.cpp" />
     <ClCompile Include="ProgramLoader.cpp" />
     <ClCompile Include="SchedProjFrame.cpp" />
-    <ClCompile Include="SoulPage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,8 +11,6 @@
 #include "main.h"
 #include "SchedProjFrame.h"
 
-#include "SoulPage.h"
-
 #include "wx/persist/toplevel.h"
 
 // If one does not want to use separate header(.h) and main(.cpp) files, can probably
@@ -26,7 +24,7 @@ const wxChar *TreebookCategories[MAX_PAGES] = {
 };
 
 // An Array of Pages (although for this program, perhaps one page is needed for now...)
-WX_DEFINE_ARRAY_PTR(SoulPage *, ArrayWidgetsPage);
+WX_DEFINE_ARRAY_PTR(SchedProjPage *, ArrayWidgetsPage);
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -129,6 +127,7 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 
 	Center(); // Centers the window frame to the center of the screen/monitor
 }
+
 /*
 	MIGHT NOT NEED THIS SINCE WE ARE NOT REALLY CREATING A BOOK OF WIDGETS LIKE IN THE SAMPLE "widgets.cpp"
 	BUT RATHER JUST UTILIZE ONE OF THE WIDGETS...
@@ -236,6 +235,13 @@ void SchedProjFrame::InitBook()
 */
 }
 
+SchedProjPage *SchedProjFrame::CurrentPage()
+{
+	wxWindow *page = m_book->GetCurrentPage();
+	return wxStaticCast(page, SchedProjPage);
+
+}
+
 SchedProjFrame::~SchedProjFrame()
 {
 	// NOTE: The code in SchedProjFrame currently does not utilize a Log window 
@@ -247,7 +253,7 @@ SchedProjFrame::~SchedProjFrame()
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //
-// Event Handlers
+// SchedProjFrame Event Handlers
 //
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -272,4 +278,15 @@ void SchedProjFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 void SchedProjFrame::OnNewList(wxCommandEvent& event)
 {
 	//SoulPage = new SoulPage();
+}
+
+
+//////////////////////////////////////
+// SchedProjPage
+//////////////////////////////////////
+SchedProjPage::SchedProjPage(wxTreebook *book, wxImageList *imaglist, const char *const icon[])
+	: wxPanel(book, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+		wxNO_FULL_REPAINT_ON_RESIZE | wxCLIP_CHILDREN | wxTAB_TRAVERSAL)
+{
+	//imaglist->Add(wxBitmap(wxImage(icon).Scale(ICON_SIZE, ICON_SIZE)));
 }

@@ -39,9 +39,6 @@
     <ClInclude Include="NotebookSoul.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SoulPage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,9 +63,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NotebookSoul.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SoulPage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

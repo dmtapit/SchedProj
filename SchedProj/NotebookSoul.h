@@ -17,7 +17,7 @@
 #pragma once
 #include <wx/wx.h>
 #include <wx/treebook.h>
-#include "SoulPage.h"
+#include "SchedProjFrame.h" // for SchedProjPage
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //  constants 
@@ -41,7 +41,7 @@ enum Orient
 //
 //////////////////////////////////////
 
-class NotebookSoulPage : public SoulPage
+class NotebookSoulPage : public SchedProjPage
 {
 public:
 	NotebookSoulPage(wxTreebook *book, wxImageList *imaglist, const char *const icon[]);
@@ -81,6 +81,6 @@ private:
 // [ Event Table ]
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-wxBEGIN_EVENT_TABLE(NotebookSoulPage, SoulPage)
+wxBEGIN_EVENT_TABLE(NotebookSoulPage, SchedProjPage)
 	EVT_BUTTON(NotebookPage_Reset, NotebookSoulPage::OnButtonReset)
 wxEND_EVENT_TABLE()
