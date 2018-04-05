@@ -33,8 +33,10 @@ WX_DEFINE_ARRAY_PTR(SchedProjPage *, ArrayWidgetsPage);
 wxBEGIN_EVENT_TABLE(SchedProjFrame, wxFrame)
 EVT_MENU(Minimal_Quit, SchedProjFrame::OnQuit)
 EVT_MENU(Minimal_About, SchedProjFrame::OnAbout)
-
 EVT_MENU(ON_NEW_LIST, SchedProjFrame::OnNewList)
+
+EVT_BUTTON(SchedProj_Quit, SchedProjFrame::OnExit)
+
 wxEND_EVENT_TABLE()
 
 ///////////////////////////////////////////////////////////////////////
@@ -56,6 +58,8 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 
 	wxMenu *fileMenu = new wxMenu;
 	fileMenu->Append(ON_NEW_LIST, "&New List\tAlt-N", "Create a new list");
+	fileMenu->AppendCheckItem(Widgets_Enable, wxT("&Enable/disable\tCtrl-E"));
+	fileMenu->AppendCheckItem(Widgets_Show, wxT("Show/Hide"));
 	fileMenu->AppendSeparator();
 	fileMenu->Append(Minimal_Quit, "E&xit\tAlt-X", "Quit this program");
 
@@ -68,6 +72,11 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 
 	// Attaching menu bar to the frame
 	SetMenuBar(menuBar);
+
+	menuBar->Check(Widgets_Enable, true);
+	menuBar->Check(Widgets_Show, true);
+
+
 #else // !wxUSE_MENUS
 	// If menus are not available add a button to access the about box
 	wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -135,7 +144,7 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 void SchedProjFrame::InitBook()
 {
 	// [Dean Tapit] Not implementing the images as of now...
-	//wxImageList *imageList = new wxImageList(ICON_SIZE, ICON_SIZE);
+	wxImageList *imageList = new wxImageList(ICON_SIZE, ICON_SIZE);
 
 	//wxImage img(sample_xpm); // What is this, some form of ASCII ART???
 	//imageList->Add(wxBitmap(img.Scale(ICON_SIZE, ICON_SIZE)));
@@ -165,16 +174,47 @@ void SchedProjFrame::InitBook()
 
 		// [Dean Tapit] PAGE INFO FOR LOOP; Will look into this later
 		// LOOKS LIKE YOU ARE GOING TO NEED THIS
-		//for ( )
-		//{
+		for ( WidgetsPageInfo *info = SchedProjPage::ms_widgetPages;
+			 info;
+			 info = info->GetNext() )
+		{
+			if ((info->GetCategories() & (1 << cat)) == 0)
+				continue;
 
-		//}
+			SchedProjPage *page = (*info->GetCtor())(
+#if USE_TREEBOOK
+				m_book
+#else
+				books[cat]
+#endif
+				, imageList);
+			pages[cat].Add(page);
 
-		// [Dean Tapit] Might not need this page menu item...
+			labels[cat].Add(info->GetLabel());
+			/*
+			if (cat == ALL_PAGE)
+			{
+				menuPages->AppendRadioItem(
+					Widgets_GoToPage + nPage,
+					info->GetLabel()
+				);
+#if !USE_TREEBOOK
+				// consider only for book in book architecture
+				nPage++;
+#endif
+			}
+			*/
 
+#if USE_TREEBOOK
+			// consider only for treebook architecture (with subpages)
+			nPage++;
+#endif
+		}
 	}
 
-	GetMenuBar()->Append(menuPages, wxT("&Page"));
+	// [Dean Tapit] Might not need this page menu item...
+
+	//GetMenuBar()->Append(menuPages, wxT("&Page"));
 
 	//m_book->AssignImageList(imageList);
 
@@ -208,15 +248,16 @@ void SchedProjFrame::InitBook()
 	
 	// No need for page change?
 
-/*
+	// Connect( .... );
+
 	// What exactly does this do?
-	const bool pageSet = wxPersistentRegisterAndRestore(m_book);
+	// bool pageSet = wxPersistentRegisterAndRestore(m_book);
 
 #if USE_TREEBOOK
 	// for treebook page #0 is empty parent page only so select the first page
 	// with some contents
-	if (!pageSet)
-		m_book->SetSelection(1);
+	//if (!pageSet)
+	//	m_book->SetSelection(1);
 
 	// but ensure that the top of the tree is shown nevertheless
 	wxTreeCtrl * const tree = m_book->GetTreeCtrl();
@@ -232,7 +273,7 @@ void SchedProjFrame::InitBook()
 		m_book->SetSelection(0);
 	}
 #endif // USE_TREEBOOK
-*/
+
 }
 
 SchedProjPage *SchedProjFrame::CurrentPage()
@@ -282,6 +323,13 @@ void SchedProjFrame::OnNewList(wxCommandEvent& event)
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+void SchedProjFrame::OnExit(wxCommandEvent& WXUNUSED(event)) // BUTTON
+{
+	Close();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 void SchedProjFrame::OnEnable(wxCommandEvent& event)
 {
 	SchedProjPage::GetAttrs().m_enabled = event.IsChecked();
@@ -289,10 +337,78 @@ void SchedProjFrame::OnEnable(wxCommandEvent& event)
 	CurrentPage()->SetUpWidget();
 }
 
+void SchedProjFrame::OnShow(wxCommandEvent& event)
+{
+	SchedProjPage::GetAttrs().m_show = event.IsChecked();
+
+	CurrentPage()->SetUpWidget();
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+// WidgetsPageInfo
+///////////////////////////////////////////////////////////////////////////////////
+
+WidgetsPageInfo::WidgetsPageInfo(Constructor ctor, const wxChar *label, int categories)
+	: m_label(label)
+	, m_categories(categories)
+{
+	m_ctor = ctor;
+
+	m_next = NULL;
+
+	// dummy sorting: add and immediately sort in the list according to label
+	if (SchedProjPage::ms_widgetPages)
+	{
+		WidgetsPageInfo *node_prev = SchedProjPage::ms_widgetPages;
+		if (wxStrcmp(label, node_prev->GetLabel().c_str()) < 0)
+		{
+			// add as first
+			m_next = node_prev;
+			SchedProjPage::ms_widgetPages = this;
+		}
+		else
+		{
+			WidgetsPageInfo *node_next;
+			do
+			{
+				node_next = node_prev->GetNext();
+				if (node_next)
+				{
+					// add if between two
+					if (wxStrcmp(label, node_next->GetLabel().c_str()) < 0)
+					{
+						node_prev->SetNext(this);
+						m_next = node_next;
+						// force to break loop
+						node_next = NULL;
+					}
+				}
+				else
+				{
+					// add as last
+					node_prev->SetNext(this);
+					m_next = node_next;
+				}
+				node_prev = node_next;
+			} while (node_next);
+		}
+	}
+	else
+	{
+		// add when first
+		SchedProjPage::ms_widgetPages = this;
+	}
+}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 // SchedProjPage
 ///////////////////////////////////////////////////////////////////////////////////
+
+WidgetsPageInfo *SchedProjPage::ms_widgetPages = NULL;
 
 SchedProjPage::SchedProjPage(wxTreebook *book, wxImageList *imaglist, const char *const icon[])
 	: wxPanel(book, wxID_ANY, wxDefaultPosition, wxDefaultSize,
@@ -319,7 +435,12 @@ void SchedProjPage::SetUpWidget()
 	{
 		wxCHECK_RET(*it, "NULL widget");
 
-		// TODO more window variables?
+		// [Dean Tapit] The Enable and Show methods are part of the library "event.h" !
+		(*it)->Enable(GetAttrs().m_enabled);
+		(*it)->Show(GetAttrs().m_enabled);
 
+		//(*it)->SetWindowVariant(GetAttrs().m_variant);
+
+		(*it)->Refresh();
 	}
 }

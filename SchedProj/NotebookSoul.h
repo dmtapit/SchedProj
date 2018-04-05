@@ -48,7 +48,8 @@ public:
 	virtual ~NotebookSoulPage();
 
 	// lazy creation of the content // [Dean Tapit] Content of the window I assume
-	virtual void CreateContent(); //wxOVERRIDE;
+	// wxOVERRIDE the CreateContent() method in SchedProjPage
+	virtual void CreateContent() wxOVERRIDE;
 
 protected:
 	// [ EVENT HANDLERS ] ///////////////////////////////////////////////
