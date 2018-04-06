@@ -30,12 +30,14 @@ enum
 {
 	// [Dean Tapit] I still don't have a good grasp of most of the code in the "widgets.cpp"
 	// sample app.  It is quite interesting, though...
+	BOOK_PAGE,
 	ALL_PAGE,
 	MAX_PAGES = 1
 };
 
 enum
 {
+	BOOK_CTRLS = 1 << BOOK_PAGE,
 	ALL_CTRLS = 1 << ALL_PAGE
 };
 
@@ -79,10 +81,15 @@ struct SchedProjAttributes
 	{
 		m_enabled = true;
 		m_show = true;
+
+		m_defaultFlags = wxBORDER_DEFAULT;
 	}
 
 	bool m_enabled;
 	bool m_show;
+
+	// the default flags, currently only contains border flags
+	int m_defaultFlags;
 };
 
 class SchedProjPage : public wxPanel
@@ -104,6 +111,11 @@ public:
 		widgets.push_back(GetWidget());
 		return widgets;
 	}
+
+	// recreate the control shown by this page
+	//
+	// this is currently used only to take into account the border flags
+	virtual void RecreateWidget() = 0;
 
 	// apply current attributes to the widget(s)
 	void SetUpWidget();

@@ -37,6 +37,9 @@ EVT_MENU(ON_NEW_LIST, SchedProjFrame::OnNewList)
 
 EVT_BUTTON(SchedProj_Quit, SchedProjFrame::OnExit)
 
+EVT_MENU(Widgets_Enable, SchedProjFrame::OnEnable)
+EVT_MENU(Widgets_Show, SchedProjFrame::OnShow)
+
 wxEND_EVENT_TABLE()
 
 ///////////////////////////////////////////////////////////////////////

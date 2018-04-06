@@ -17,7 +17,7 @@
 #pragma once
 #include <wx/wx.h>
 #include <wx/treebook.h>
-#include "SchedProjFrame.h" // for SchedProjPage
+#include "SchedProjFrame.h" // for SchedProjPage ; // essentially this codes widgets.h/widgets.cpp??
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //  constants 
@@ -26,13 +26,19 @@
 // [ control ids ]
 enum
 {
-	NotebookPage_Reset = wxID_HIGHEST + 1
+	NotebookPage_Reset = wxID_HIGHEST + 1,
+
+	BookPage_Book
 };
 
 // [ book orientations ]
 enum Orient
 {
-
+	Orient_Top,
+	Orient_Bottom,
+	Orient_Left,
+	Orient_Right,
+	Orient_Max
 };
 
 //////////////////////////////////////
@@ -47,6 +53,12 @@ public:
 	NotebookSoulPage(wxTreebook *book, wxImageList *imaglist, const char *const icon[]);
 	virtual ~NotebookSoulPage();
 
+	// [Dean Tapit] *GetWidget derived from SchedProjFrame.h *GetWidget (the use of virtual functions!)
+	virtual wxWindow *GetWidget() const wxOVERRIDE { return m_book; }
+	virtual void RecreateWidget() wxOVERRIDE { RecreateBook(); }
+	// wxOVERRIDE does override a base class member
+	// In this case, derived class NotebookSoulPage overrides base class SchedProjPage
+
 	// lazy creation of the content // [Dean Tapit] Content of the window I assume
 	// wxOVERRIDE the CreateContent() method in SchedProjPage
 	virtual void CreateContent() wxOVERRIDE;
@@ -55,6 +67,24 @@ protected:
 	// [ EVENT HANDLERS ] ///////////////////////////////////////////////
 	void OnButtonReset(wxCommandEvent& event);
 
+
+
+
+	// Reset Book parameters
+	void Reset();
+
+	// (Re)create book
+	void RecreateBook();
+	virtual wxBookCtrlBase *CreateBook(long flags) = 0;
+
+	// create or destroy the image list
+	//void CreateImageList();
+
+	// create a new page
+	wxWindow *CreateNewPage();
+
+	// get the image index for the new page
+	int GetIconIndex() const;
 
 	// Controls //////////////////////////
 
