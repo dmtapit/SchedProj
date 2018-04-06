@@ -20,7 +20,7 @@
 // SchedProjFrame.obj : error LNK2005: "wchar_t const * * TreebookCategories" (?TreebookCategories@@3PAPB_WA) already defined in ProgramLoader.obj
 // C:\Users\Dean Tapit\source\repos\SchedProj\Debug\SchedProj.exe : fatal error LNK1169: one or more multiply defined symbols found
 const wxChar *TreebookCategories[MAX_PAGES] = {
-	wxT("TREEBOOK_WHAT!?")
+	wxT("TREEBOOK_Category")
 };
 
 // An Array of Pages (although for this program, perhaps one page is needed for now...)

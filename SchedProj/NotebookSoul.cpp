@@ -27,7 +27,7 @@ NotebookSoulPage::NotebookSoulPage(wxTreebook *book, wxImageList *imaglist, cons
 	m_book = NULL;
 	m_sizerBook = (wxSizer *)NULL;
 
-	m_imageList = NULL;
+	//m_imageList = NULL;
 }
 
 void NotebookSoulPage::CreateContent()
