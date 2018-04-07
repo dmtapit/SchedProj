@@ -33,7 +33,6 @@ WX_DEFINE_ARRAY_PTR(SchedProjPage *, ArrayWidgetsPage);
 wxBEGIN_EVENT_TABLE(SchedProjFrame, wxFrame)
 EVT_MENU(Minimal_Quit, SchedProjFrame::OnQuit)
 EVT_MENU(Minimal_About, SchedProjFrame::OnAbout)
-EVT_MENU(ON_NEW_LIST, SchedProjFrame::OnNewList)
 
 EVT_BUTTON(SchedProj_Quit, SchedProjFrame::OnExit)
 
@@ -60,7 +59,6 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 	wxMenuBar *menuBar = new wxMenuBar();
 
 	wxMenu *fileMenu = new wxMenu;
-	fileMenu->Append(ON_NEW_LIST, "&New List\tAlt-N", "Create a new list");
 	fileMenu->AppendCheckItem(Widgets_Enable, wxT("&Enable/disable\tCtrl-E"));
 	fileMenu->AppendCheckItem(Widgets_Show, wxT("Show/Hide"));
 	fileMenu->AppendSeparator();
@@ -219,14 +217,15 @@ void SchedProjFrame::InitBook()
 
 	//GetMenuBar()->Append(menuPages, wxT("&Page"));
 
-	//m_book->AssignImageList(imageList);
+	m_book->AssignImageList(imageList);
 
 	for (cat = 0; cat < MAX_PAGES; cat++)
 	{
 #if USE_TREEBOOK
 		m_book->AddPage(NULL, TreebookCategories[cat], false, 0);
 #else
-
+		m_book->AddPage(books[cat], TreebookCategories[cat], false, 0);
+		books[cat]->SetImageList(imageList);
 #endif
 
 		// now do add them [Dean Tapit] Do I need to do this for my purposes??
@@ -254,7 +253,7 @@ void SchedProjFrame::InitBook()
 	// Connect( .... );
 
 	// What exactly does this do?
-	// bool pageSet = wxPersistentRegisterAndRestore(m_book);
+	//const bool pageSet = wxPersistentRegisterAndRestore(m_book);
 
 #if USE_TREEBOOK
 	// for treebook page #0 is empty parent page only so select the first page
@@ -317,11 +316,6 @@ void SchedProjFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 		"%s", VERSION, wxGetOsDescription(), AUTHOR
 	),
 		"About SchedProj App", wxOK | wxICON_INFORMATION, this);
-}
-
-void SchedProjFrame::OnNewList(wxCommandEvent& event)
-{
-	//SoulPage = new SoulPage();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

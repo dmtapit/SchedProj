@@ -206,7 +206,6 @@ protected:
 	// The frame menu commands
 	void OnQuit(wxCommandEvent& event); // File menu quit
 	void OnAbout(wxCommandEvent& event);
-	void OnNewList(wxCommandEvent& event); // This should aim to create a new list
 
 	void OnExit(wxCommandEvent& event); // Button quit
 
