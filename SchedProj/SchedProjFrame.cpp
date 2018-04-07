@@ -37,9 +37,13 @@ EVT_MENU(Minimal_About, SchedProjFrame::OnAbout)
 
 EVT_BUTTON(SchedProj_Quit, SchedProjFrame::OnExit)
 
+#if wxUSE_MENUS
+EVT_WIDGETS_PAGE_CHANGING(wxID_ANY, SchedProjFrame::OnPageChanging)
+
 EVT_MENU(Widgets_Enable, SchedProjFrame::OnEnable)
 EVT_MENU(Widgets_Show, SchedProjFrame::OnShow)
 
+#endif // wxUSE_MENUS
 wxEND_EVENT_TABLE()
 
 ///////////////////////////////////////////////////////////////////////
@@ -327,6 +331,14 @@ void SchedProjFrame::OnExit(wxCommandEvent& WXUNUSED(event)) // BUTTON
 }
 
 #if wxUSE_MENUS
+
+/* [Dean Tapit] From what I figured out,
+	This functions prevents the user from selecting the Category name and attempting anything with it,
+	otherwise it returns a Static Cast error of some sort (Take this method out to see what I mean)
+
+	However, the category has to have been opened first before you click on the Enable/Show radio
+	buttons, otherwise you will see the error I am talking about
+*/
 void SchedProjFrame::OnPageChanging(SchedProjBookCtrlEvent& event)
 {
 #if USE_TREEBOOK

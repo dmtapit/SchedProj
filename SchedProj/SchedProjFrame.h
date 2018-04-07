@@ -17,6 +17,7 @@
 #define USE_TREEBOOK 1
 #define SchedProjBookCtrl wxTreebook
 #define SchedProjBookCtrlEvent wxTreebookEvent
+#define EVT_WIDGETS_PAGE_CHANGING(id, func) EVT_TREEBOOK_PAGE_CHANGING(id, func)
 #endif // wxUSE_TREEBOOK
 
 #define ICON_SIZE	16
