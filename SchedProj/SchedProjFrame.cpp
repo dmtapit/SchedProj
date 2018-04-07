@@ -11,6 +11,8 @@
 #include "main.h"
 #include "SchedProjFrame.h"
 
+#include "wx/wupdlock.h"
+
 #include "wx/persist/toplevel.h"
 
 // If one does not want to use separate header(.h) and main(.cpp) files, can probably
@@ -25,7 +27,6 @@ const wxChar *TreebookCategories[MAX_PAGES] = {
 
 // An Array of Pages (although for this program, perhaps one page is needed for now...)
 WX_DEFINE_ARRAY_PTR(SchedProjPage *, ArrayWidgetsPage);
-
 
 ///////////////////////////////////////////////////////////////////////
 // Event tables and other macros for wxWidgets
@@ -325,6 +326,69 @@ void SchedProjFrame::OnExit(wxCommandEvent& WXUNUSED(event)) // BUTTON
 	Close();
 }
 
+#if wxUSE_MENUS
+void SchedProjFrame::OnPageChanging(SchedProjBookCtrlEvent& event)
+{
+#if USE_TREEBOOK
+	// don't allow selection of entries without pages (categories)
+	if (!m_book->GetPage(event.GetSelection()))
+		event.Veto();
+#else
+	wxUnusedVar(event);
+#endif
+}
+
+void SchedProjFrame::OnPageChanged(SchedProjBookCtrlEvent& event)
+{
+	const int sel = event.GetSelection();
+
+	// adjust "Page" menu selection // [Dean Tapit] I am not using this at the moment
+	//wxMenuItem *item = GetMenuBar()->FindItem(Widgets_GoToPage + sel);
+	//if (item)
+		//item->Check();
+
+	//GetMenuBar()->Check(Widgets_BusyCursor, false);
+
+	// create the pages on demand, otherwise the sample startup is too slow as
+	// it creates hundreds of controls
+	SchedProjPage *curPage = CurrentPage();
+	if (curPage->GetChildren().empty())
+	{
+		wxWindowUpdateLocker noUpdates(curPage);
+		curPage->CreateContent();
+		//curPage->Layout();
+		curPage->GetSizer()->Fit(curPage);
+
+		SchedProjBookCtrl *book = wxStaticCast(curPage->GetParent(), SchedProjBookCtrl);
+		wxSize size;
+		for (size_t i = 0; i < book->GetPageCount(); ++i)
+		{
+			wxWindow *page = book->GetPage(i);
+			if (page)
+			{
+				size.IncTo(page->GetSize());
+			}
+		}
+		curPage->SetSize(size);
+	}
+	// re-apply the attributes to the widget(s)
+	curPage->SetUpWidget();
+
+	event.Skip();
+}
+
+/*
+void SchedProjFrame::OnGoToPage(wxCommandEvent& event)
+{
+#if USE_TREEBOOK
+	m_book->SetSelection(event.GetId() - Widgets_GoToPage);
+#else
+#endif
+}
+*/
+
+#endif // wxUSE_MENUS
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void SchedProjFrame::OnEnable(wxCommandEvent& event)
@@ -436,7 +500,7 @@ void SchedProjPage::SetUpWidget()
 		(*it)->Enable(GetAttrs().m_enabled);
 		(*it)->Show(GetAttrs().m_enabled);
 
-		//(*it)->SetWindowVariant(GetAttrs().m_variant);
+		(*it)->SetWindowVariant(GetAttrs().m_variant);
 
 		(*it)->Refresh();
 	}

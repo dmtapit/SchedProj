@@ -16,9 +16,12 @@
 #include "wx/treebook.h"
 #define USE_TREEBOOK 1
 #define SchedProjBookCtrl wxTreebook
+#define SchedProjBookCtrlEvent wxTreebookEvent
 #endif // wxUSE_TREEBOOK
 
 #define ICON_SIZE	16
+
+class WXDLLIMPEXP_FWD_CORE SchedProjBookCtrl; // [Dean Tapit] I don't know what this does...
 
 class WidgetsPageInfo;
 
@@ -82,11 +85,15 @@ struct SchedProjAttributes
 		m_enabled = true;
 		m_show = true;
 
+		m_variant = wxWINDOW_VARIANT_NORMAL;
+
 		m_defaultFlags = wxBORDER_DEFAULT;
 	}
 
 	bool m_enabled;
 	bool m_show;
+
+	wxWindowVariant m_variant;
 
 	// the default flags, currently only contains border flags
 	int m_defaultFlags;
@@ -179,16 +186,18 @@ private:
 
 // and this one must be inserted somewhere in the source file
 #define IMPLEMENT_WIDGETS_PAGE(classname, label, categories)				\
-	SchedProjPage *wxCtorFor##classname(SchedProjBookCtrl *book,					\
+	SchedProjPage *wxCtorFor##classname(SchedProjBookCtrl *book,			\
 										wxImageList *imaglist)				\
 		{ return new classname(book, imaglist); }							\
 	WidgetsPageInfo classname::												\
 		ms_info##classname(wxCtorFor##classname, label, ALL_CTRLS | categories)
 
 
+////////////////////////////////////////////////////////////////////////////////////////
+
 ///////////////////////////////////////////////////////////////////////
 //
-// MAIN FRAME (SchedProjFrame)
+// MAIN FRAME (SchedProjFrame) Header
 //
 ///////////////////////////////////////////////////////////////////////
 
@@ -203,14 +212,24 @@ public:
 
 protected:
 	// event handlers (these functions should not be virtual)
+
+	void OnExit(wxCommandEvent& event); // Button quit
+
+#if wxUSE_MENUS
+	void OnPageChanging(SchedProjBookCtrlEvent& event);
+	void OnPageChanged(SchedProjBookCtrlEvent& event);
+	//void OnGoToPage(wxCommandEvent& event);
+
 	// The frame menu commands
 	void OnQuit(wxCommandEvent& event); // File menu quit
 	void OnAbout(wxCommandEvent& event);
 
-	void OnExit(wxCommandEvent& event); // Button quit
 
 	void OnEnable(wxCommandEvent& event);
 	void OnShow(wxCommandEvent& event);
+
+
+#endif // wxUSE_MENUS
 
 	// initializing the book: add all pages to it
 	// [Dean Tapit: since this program really only wants to create a notebook, and not pages of widgets, this may change]
@@ -221,7 +240,7 @@ protected:
 
 private:
 	// the panel containing everything
-	wxPanel *m_panel;
+	wxPanel * m_panel;
 
 	// the book containing the test pages (the widgets); in SchedProj, just a notebook...?; a wxTreebook in actuality
 	SchedProjBookCtrl *m_book;
