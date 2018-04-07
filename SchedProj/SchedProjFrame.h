@@ -2,7 +2,7 @@
 // Program:		SchedProj
 // Name:		SchedProjFrame.h
 // Author:		Dean Tapit
-// Last Edit:	4/4/18
+// Last Edit:	4/7/18
 // Info:		Based off some wxWidgets tutorials on the wiki
 //			This is the MAIN FRAME code for Sched Project.
 //			Based off of "minimal.cpp" sample code.
@@ -18,6 +18,8 @@
 #define SchedProjBookCtrl wxTreebook
 #define SchedProjBookCtrlEvent wxTreebookEvent
 #define EVT_WIDGETS_PAGE_CHANGING(id, func) EVT_TREEBOOK_PAGE_CHANGING(id, func)
+#define wxEVT_COMMAND_WIDGETS_PAGE_CHANGED wxEVT_TREEBOOK_PAGE_CHANGED
+#define wxSchedProjbookEventHandler(func) wxTreebookEventHandler(func)
 #endif // wxUSE_TREEBOOK
 
 #define ICON_SIZE	16

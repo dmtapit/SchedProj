@@ -2,7 +2,7 @@
 // Program:		SchedProj
 // Name:		SchedProjFrame.cpp
 // Author:		Dean Tapit
-// Last Edit:	4/4/18
+// Last Edit:	4/7/18
 // Info:		Based off some wxWidgets tutorials on the wiki
 //			This is the MAIN FRAME code for Sched Project.
 //			Based off of minimal.cpp sample code.
@@ -253,9 +253,13 @@ void SchedProjFrame::InitBook()
 
 	}
 	
-	// No need for page change?
-
-	// Connect( .... );
+	// [Dean Tapit] No need for page change? Seems it is necessary after all!
+	// What this does (Aside from the page change) is to actually create the widget on demand
+	// (see the OnPageChanged method) instead of loading all the widgets at once
+	// Of course, SchedProj only contains one widget, but this is good to know
+	 Connect( wxID_ANY,
+			wxEVT_COMMAND_WIDGETS_PAGE_CHANGED,
+			wxSchedProjbookEventHandler(SchedProjFrame::OnPageChanged));
 
 	// What exactly does this do?
 	//const bool pageSet = wxPersistentRegisterAndRestore(m_book);

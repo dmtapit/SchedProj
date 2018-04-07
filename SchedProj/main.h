@@ -2,7 +2,7 @@
 // Program:		SchedProj
 // Name:		main.h
 // Author:		Dean Tapit
-// Last Edit:	3/31/18
+// Last Edit:	4/7/18
 // Info:		Based off some wxWidgets tutorials on the wiki
 //			Contains the wxApp constructor.
 //			Also contains various const variables.
@@ -23,10 +23,10 @@ static const wxChar *FILETYPES = wxT(
 	"Hypertext markup files|*html;*htm;*HTML;*HTM|"
 	"All files|*.*"
 );
-static const wxChar *AUTHOR = wxT("Dean Tapit (c) Mar 2018");
+static const wxChar *AUTHOR = wxT("Dean Tapit (c) Apr 2018");
 static const wxChar *ABOUT = wxT(" - Learning some wxWidgets basics from wiki.wxwidgets.org");
 
-static const wxChar *VERSION = wxT("0.0.0.2");
+static const wxChar *VERSION = wxT("0.16");
 
 // Defining a new application type, each program should derive a class from wxApp
 class SchedProjApp : public wxApp

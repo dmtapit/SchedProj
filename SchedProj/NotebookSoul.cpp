@@ -2,7 +2,7 @@
 // Program:		SchedProj
 // Name:		NotebookSoul.cpp
 // Author:		Dean Tapit
-// Last Edit:	3/31/18
+// Last Edit:	4/7/18
 // Info:		Based off the wxWidgets sample "notebook.cpp"
 //			One could say, it is practically the soul of it...
 //			Since the headers were included in the original file,
