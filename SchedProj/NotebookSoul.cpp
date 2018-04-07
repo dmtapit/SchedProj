@@ -12,6 +12,8 @@
 
 #include "NotebookSoul.h"
 
+#include "wx/artprov.h"
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // [ IMPLEMENTATION ]
 //	NotebookSoulPage = BookWidgetsPage
@@ -27,7 +29,7 @@ NotebookSoulPage::NotebookSoulPage(wxTreebook *book, wxImageList *imaglist, cons
 	m_book = NULL;
 	m_sizerBook = (wxSizer *)NULL;
 
-	//m_imageList = NULL;
+	m_imageList = NULL;
 }
 
 void NotebookSoulPage::CreateContent()
@@ -56,18 +58,21 @@ void NotebookSoulPage::CreateContent()
 	sizerLeft->Add(5, 5, 0, wxGROW | wxALL, 5); // spacer
 	sizerLeft->Add(m_radioOrient, 0, wxALL, 5);
 
-	//wxButton *btn
+	wxButton *btn = new wxButton(this, NotebookPage_Reset, wxT("&Reset"));
+	sizerLeft->Add(btn, 0, wxALIGN_CENTRE_HORIZONTAL | wxALL, 15);
 
 	// Middle pane
+	wxStaticBox *box2 = new wxStaticBox(this, wxID_ANY, wxT("&Contents"));
+	wxSizer *sizerMiddle = new wxStaticBoxSizer(box2, wxVERTICAL);
 
-		//TODO
+	// TODO add the rest of the middle panel
 
 	// Right pane
 	m_sizerBook = new wxBoxSizer(wxHORIZONTAL);
 
 	// The three (3) panes compose the whole window
 	sizerTop->Add(sizerLeft, 0, wxGROW | (wxALL & ~wxLEFT), 10);
-	//middlepane
+	sizerTop->Add(sizerMiddle, 0, wxGROW | wxALL, 10); // middle pane
 	sizerTop->Add(m_sizerBook, 1, wxGROW | (wxALL & ~wxRIGHT), 10);
 
 	RecreateBook();
@@ -79,7 +84,9 @@ void NotebookSoulPage::CreateContent()
 	SetSizer(sizerTop);
 }
 
-NotebookSoulPage::~NotebookSoulPage() { //delete m_imagelist; 
+NotebookSoulPage::~NotebookSoulPage()
+{ 
+	delete m_imageList; 
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,6 +97,33 @@ void NotebookSoulPage::Reset()
 {
 	m_chkImages->SetValue(true);
 	m_radioOrient->SetSelection(Orient_Top);
+}
+
+void NotebookSoulPage::CreateImageList()
+{
+	if (m_chkImages->GetValue())
+	{
+		if (!m_imageList)
+		{
+			// create a dummy image list with a few icons
+			m_imageList = new wxImageList(32, 32);
+			wxSize size(32, 32);
+			m_imageList->Add(wxArtProvider::GetIcon(wxART_INFORMATION, wxART_OTHER, size));
+		}
+
+		if (m_book)
+			m_book->SetImageList(m_imageList);
+	}
+	else // no images
+	{
+		wxDELETE(m_imageList);
+	}
+
+	// [Dean Tapit]: A bug? Is this why I am having problems?
+
+	// because of the bug in wxMSW we can't use SetImageList(NULL) - although
+	// it would be logical if this removed the image list from book, under
+	// MSW it crashes instead - FIXME
 }
 
 void NotebookSoulPage::RecreateBook()
@@ -193,9 +227,9 @@ wxWindow *NotebookSoulPage::CreateNewPage()
 
 void NotebookSoulPage::OnButtonReset(wxCommandEvent& WXUNUSED(event))
 {
-	//Reset();
+	Reset();
 
-	//RecreateBook();
+	RecreateBook();
 }
 
 #if wxUSE_NOTEBOOK
@@ -213,7 +247,7 @@ void NotebookSoulPage::OnButtonReset(wxCommandEvent& WXUNUSED(event))
 class NotebookWidgetsPage : public NotebookSoulPage
 {
 public:
-	NotebookWidgetsPage(wxTreebook *book, wxImageList *imaglist)
+	NotebookWidgetsPage(SchedProjBookCtrl *book, wxImageList *imaglist)
 		: NotebookSoulPage(book, imaglist, NULL) //, notebook_xpm) // to replace NULL
 	{
 		RecreateBook();
@@ -249,7 +283,9 @@ private:
 // [Dean Tapit] : why is it necessary to add BOOK_CTRLS? what exactly is FAMILY_CTRLS?
 IMPLEMENT_WIDGETS_PAGE(NotebookWidgetsPage, wxT("Notebook"), FAMILY_CTRLS | BOOK_CTRLS);
 
+// void NotebookSoulPage::OnPageChanging(wxNotebookEvent& event)
 
+// void NotebookSoulPage::OnPageChanged(wxNotebookEvent& event)
 
 
 #endif // wxUSE_NOTEBOOK

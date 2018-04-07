@@ -95,11 +95,13 @@ struct SchedProjAttributes
 class SchedProjPage : public wxPanel
 {
 public:
-	SchedProjPage(wxTreebook *book, wxImageList *imaglist, const char *const icon[]);
+	SchedProjPage(SchedProjBookCtrl *book, wxImageList *imaglist, const char *const icon[]);
 	
 	// return the control shown by this page
 	virtual wxWindow *GetWidget() const = 0;
 	
+	//
+
 	// lazy creation of the content
 	virtual void CreateContent() = 0;
 
@@ -140,7 +142,7 @@ public:
 class WidgetsPageInfo
 {
 public:
-	typedef SchedProjPage *(*Constructor)(wxTreebook *book, wxImageList *imaglist);
+	typedef SchedProjPage *(*Constructor)(SchedProjBookCtrl *book, wxImageList *imaglist);
 
 	// our ctor
 	WidgetsPageInfo(Constructor ctor, const wxChar *label, int categories);
@@ -177,7 +179,7 @@ private:
 
 // and this one must be inserted somewhere in the source file
 #define IMPLEMENT_WIDGETS_PAGE(classname, label, categories)				\
-	SchedProjPage *wxCtorFor##classname(wxTreebook *book,					\
+	SchedProjPage *wxCtorFor##classname(SchedProjBookCtrl *book,					\
 										wxImageList *imaglist)				\
 		{ return new classname(book, imaglist); }							\
 	WidgetsPageInfo classname::												\

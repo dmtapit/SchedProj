@@ -78,7 +78,7 @@ protected:
 	virtual wxBookCtrlBase *CreateBook(long flags) = 0;
 
 	// create or destroy the image list
-	//void CreateImageList();
+	void CreateImageList();
 
 	// create a new page
 	wxWindow *CreateNewPage();
