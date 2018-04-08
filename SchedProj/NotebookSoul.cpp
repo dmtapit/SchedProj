@@ -65,7 +65,26 @@ void NotebookSoulPage::CreateContent()
 	wxStaticBox *box2 = new wxStaticBox(this, wxID_ANY, wxT("&Contents"));
 	wxSizer *sizerMiddle = new wxStaticBoxSizer(box2, wxVERTICAL);
 
-	// TODO add the rest of the middle panel
+	//wxTextCtrl *text;
+	//wxSizer *sizerRow =
+
+	//text->SetEditable(false); // [Dean Tapit] For actual use, set to true, I'm guessing...
+	//sizerMiddle->Add();
+
+	// sizerRow =
+
+	//text->SetEditable(false);
+	// sizerMiddle->Add(sizerRow, 0, wxALL | wxGROW, 5);
+
+	btn = new wxButton(this, BookPage_AddPage, wxT("&Add page"));
+	sizerMiddle->Add(btn, 0, wxALL | wxGROW, 5);
+
+	// sizerRow =
+
+	// sizerMiddle->Add(sizerRow, 0, wxALL | wxGROW, 5);
+
+	btn = new wxButton(this, BookPage_DeleteAll, wxT("&Delete All"));
+	sizerMiddle->Add(btn, 0, wxALL | wxGROW, 5);
 
 	// Right pane
 	m_sizerBook = new wxBoxSizer(wxHORIZONTAL);

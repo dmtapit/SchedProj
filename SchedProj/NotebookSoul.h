@@ -28,6 +28,10 @@ enum
 {
 	NotebookPage_Reset = wxID_HIGHEST + 1,
 
+	BookPage_AddPage,
+
+	BookPage_DeleteAll,
+
 	BookPage_Book
 };
 
