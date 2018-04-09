@@ -521,3 +521,28 @@ void SchedProjPage::SetUpWidget()
 		(*it)->Refresh();
 	}
 }
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Prebuilt Sizers and Checkboxes (Several Helper Functions for Page Creation)
+//////////////////////////////////////////////////////////////////////////////////////
+
+wxSizer *SchedProjPage::CreateSizerWithText(wxControl *control, wxWindowID id, wxTextCtrl **ppText)
+{
+	wxSizer *sizerRow = new wxBoxSizer(wxHORIZONTAL);
+	wxTextCtrl *text = new wxTextCtrl(this, id, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+
+	sizerRow->Add(control, 0, wxRIGHT | wxALIGN_CENTRE_VERTICAL, 5);
+	sizerRow->Add(text, 1, wxLEFT | wxALIGN_CENTRE_VERTICAL, 5);
+
+	if (ppText)
+		*ppText = text;
+
+	return sizerRow;
+}
+
+// create a sizer containing a label and a text ctrl
+wxSizer *SchedProjPage::CreateSizerWithTextAndLabel(const wxString& label, wxWindowID id, wxTextCtrl **ppText)
+{
+	return CreateSizerWithText(new wxStaticText(this, wxID_ANY, label), id, ppText);
+}

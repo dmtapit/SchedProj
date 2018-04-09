@@ -65,11 +65,11 @@ void NotebookSoulPage::CreateContent()
 	wxStaticBox *box2 = new wxStaticBox(this, wxID_ANY, wxT("&Contents"));
 	wxSizer *sizerMiddle = new wxStaticBoxSizer(box2, wxVERTICAL);
 
-	//wxTextCtrl *text;
-	//wxSizer *sizerRow =
+	wxTextCtrl *text;
+	wxSizer *sizerRow = CreateSizerWithTextAndLabel(wxT("Number of pages: "), BookPage_NumPagesText, &text);
 
-	//text->SetEditable(false); // [Dean Tapit] For actual use, set to true, I'm guessing...
-	//sizerMiddle->Add();
+	text->SetEditable(false); // [Dean Tapit] For actual use, set to true, I'm guessing...
+	sizerMiddle->Add(sizerRow, 0, wxALL | wxGROW, 5);
 
 	// sizerRow =
 

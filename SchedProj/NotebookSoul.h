@@ -32,6 +32,8 @@ enum
 
 	BookPage_DeleteAll,
 
+	BookPage_NumPagesText,
+
 	BookPage_Book
 };
 

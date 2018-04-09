@@ -136,6 +136,21 @@ public:
 	static SchedProjAttributes& GetAttrs();
 
 protected:
+	// several helper functions for page creationg
+
+	// create a horz sizer containing the given control and the text ctrl
+	// (pointer to which will be saved in the provided variable if not NULL)
+	// with the specified id
+	wxSizer *CreateSizerWithText(wxControl *control, wxWindowID id = wxID_ANY, wxTextCtrl **ppText = NULL);
+
+	// create a sizer containing a label and a text ctrl
+	wxSizer *CreateSizerWithTextAndLabel(const wxString& label, wxWindowID id = wxID_ANY, wxTextCtrl **ppText = NULL);
+
+	// create a sizer containing a button and a text ctrl
+	//wxSizer *CreateSizerWithTextAndButton(wxWindowID idBtn, const wxString& labelBtn, wxWindowID id = wxID_ANY, wxTextCtrl **ppText = NULL);
+
+	// create a checkbox and add it to the sizer
+	//wxCheckBox *CreateCheckBoxAndAddToSize(wxSizer *sizer, const wxString& label, wxWindowID id = wxID_ANY);
 
 public:
 	// the head of the linked list containing info about all pages
