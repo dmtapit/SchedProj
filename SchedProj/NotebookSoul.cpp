@@ -2,7 +2,7 @@
 // Program:		SchedProj
 // Name:		NotebookSoul.cpp
 // Author:		Dean Tapit
-// Last Edit:	4/7/18
+// Last Edit:	4/9/18
 // Info:		Based off the wxWidgets sample "notebook.cpp"
 //			One could say, it is practically the soul of it...
 //			Since the headers were included in the original file,
@@ -67,21 +67,24 @@ void NotebookSoulPage::CreateContent()
 
 	wxTextCtrl *text;
 	wxSizer *sizerRow = CreateSizerWithTextAndLabel(wxT("Number of pages: "), BookPage_NumPagesText, &text);
-
 	text->SetEditable(false); // [Dean Tapit] For actual use, set to true, I'm guessing...
 	sizerMiddle->Add(sizerRow, 0, wxALL | wxGROW, 5);
 
-	// sizerRow =
+	sizerRow = CreateSizerWithTextAndLabel(wxT("Current selection: "), BookPage_CurSelectText, &text);
+	text->SetEditable(false);
+	sizerMiddle->Add(sizerRow, 0, wxALL | wxGROW, 5);
 
-	//text->SetEditable(false);
-	// sizerMiddle->Add(sizerRow, 0, wxALL | wxGROW, 5);
+	sizerRow = CreateSizerWithTextAndButton(BookPage_SelectPage, wxT("&Select page"), BookPage_SelectText, &m_textSelect);
+	sizerMiddle->Add(sizerRow, 0, wxALL | wxGROW, 5);
 
 	btn = new wxButton(this, BookPage_AddPage, wxT("&Add page"));
 	sizerMiddle->Add(btn, 0, wxALL | wxGROW, 5);
 
-	// sizerRow =
-
-	// sizerMiddle->Add(sizerRow, 0, wxALL | wxGROW, 5);
+	sizerRow = CreateSizerWithTextAndButton(BookPage_InsertPage, wxT("&Insert page at"), BookPage_InsertText, &m_textInsert);
+	sizerMiddle->Add(sizerRow, 0, wxALL | wxGROW, 5);
+	
+	sizerRow = CreateSizerWithTextAndButton(BookPage_RemovePage, wxT("&Remove page"), BookPage_RemoveText, &m_textRemove);
+	sizerMiddle->Add(sizerRow, 0, wxALL | wxGROW, 5);
 
 	btn = new wxButton(this, BookPage_DeleteAll, wxT("&Delete All"));
 	sizerMiddle->Add(btn, 0, wxALL | wxGROW, 5);

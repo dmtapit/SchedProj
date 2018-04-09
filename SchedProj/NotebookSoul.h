@@ -2,7 +2,7 @@
 // Program:		SchedProj
 // Name:		NotebookSoul.h
 // Author:		Dean Tapit
-// Last Edit:	4/7/18
+// Last Edit:	4/9/18
 // Info:		Based off the wxWidgets sample "notebook.cpp"
 //			One could say, it is practically the soul of it...
 //			Since the headers were included in the original file,
@@ -29,10 +29,15 @@ enum
 	NotebookPage_Reset = wxID_HIGHEST + 1,
 
 	BookPage_AddPage,
-
+	BookPage_SelectPage,
+	BookPage_SelectText,
+	BookPage_InsertPage,
+	BookPage_InsertText,
+	BookPage_RemovePage,
+	BookPage_RemoveText,
 	BookPage_DeleteAll,
-
 	BookPage_NumPagesText,
+	BookPage_CurSelectText,
 
 	BookPage_Book
 };

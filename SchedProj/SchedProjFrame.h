@@ -2,7 +2,7 @@
 // Program:		SchedProj
 // Name:		SchedProjFrame.h
 // Author:		Dean Tapit
-// Last Edit:	4/7/18
+// Last Edit:	4/9/18
 // Info:		Based off some wxWidgets tutorials on the wiki
 //			This is the MAIN FRAME code for Sched Project.
 //			Based off of "minimal.cpp" sample code.
@@ -147,7 +147,7 @@ protected:
 	wxSizer *CreateSizerWithTextAndLabel(const wxString& label, wxWindowID id = wxID_ANY, wxTextCtrl **ppText = NULL);
 
 	// create a sizer containing a button and a text ctrl
-	//wxSizer *CreateSizerWithTextAndButton(wxWindowID idBtn, const wxString& labelBtn, wxWindowID id = wxID_ANY, wxTextCtrl **ppText = NULL);
+	wxSizer *CreateSizerWithTextAndButton(wxWindowID idBtn, const wxString& labelBtn, wxWindowID id = wxID_ANY, wxTextCtrl **ppText = NULL);
 
 	// create a checkbox and add it to the sizer
 	//wxCheckBox *CreateCheckBoxAndAddToSize(wxSizer *sizer, const wxString& label, wxWindowID id = wxID_ANY);

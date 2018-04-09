@@ -2,7 +2,7 @@
 // Program:		SchedProj
 // Name:		SchedProjFrame.cpp
 // Author:		Dean Tapit
-// Last Edit:	4/7/18
+// Last Edit:	4/9/18
 // Info:		Based off some wxWidgets tutorials on the wiki
 //			This is the MAIN FRAME code for Sched Project.
 //			Based off of minimal.cpp sample code.
@@ -545,4 +545,10 @@ wxSizer *SchedProjPage::CreateSizerWithText(wxControl *control, wxWindowID id, w
 wxSizer *SchedProjPage::CreateSizerWithTextAndLabel(const wxString& label, wxWindowID id, wxTextCtrl **ppText)
 {
 	return CreateSizerWithText(new wxStaticText(this, wxID_ANY, label), id, ppText);
+}
+
+// create a sizer containing a button and a text ctrl
+wxSizer *SchedProjPage::CreateSizerWithTextAndButton(wxWindowID idBtn, const wxString& label, wxWindowID id, wxTextCtrl **ppText)
+{
+	return CreateSizerWithText(new wxButton(this, idBtn, label), id, ppText);
 }
