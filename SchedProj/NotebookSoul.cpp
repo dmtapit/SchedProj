@@ -67,7 +67,7 @@ void NotebookSoulPage::CreateContent()
 
 	wxTextCtrl *text;
 	wxSizer *sizerRow = CreateSizerWithTextAndLabel(wxT("Number of pages: "), BookPage_NumPagesText, &text);
-	text->SetEditable(false); // [Dean Tapit] For actual use, set to true, I'm guessing...
+	text->SetEditable(false); // [Dean Tapit] Set false to prevent user from tampering; "text" changes from events instead
 	sizerMiddle->Add(sizerRow, 0, wxALL | wxGROW, 5);
 
 	sizerRow = CreateSizerWithTextAndLabel(wxT("Current selection: "), BookPage_CurSelectText, &text);
@@ -311,7 +311,17 @@ void NotebookSoulPage::OnCheckOrRadioBox(wxCommandEvent& WXUNUSED(event))
 	RecreateBook();
 }
 
+void NotebookSoulPage::OnUpdateUINumPagesText(wxUpdateUIEvent& event)
+{
+	if (m_book)
+		event.SetText(wxString::Format(wxT("%u"), unsigned(m_book->GetPageCount())));
+}
 
+void NotebookSoulPage::OnUpdateUICurSelectText(wxUpdateUIEvent& event)
+{
+	if (m_book)
+		event.SetText(wxString::Format(wxT("%d"), m_book->GetSelection()));
+}
 
 #if wxUSE_NOTEBOOK
 

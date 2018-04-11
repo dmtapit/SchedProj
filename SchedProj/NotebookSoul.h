@@ -85,7 +85,8 @@ protected:
 
 	void OnCheckOrRadioBox(wxCommandEvent& event);
 
-
+	void OnUpdateUINumPagesText(wxUpdateUIEvent& event);
+	void OnUpdateUICurSelectText(wxUpdateUIEvent& event);
 
 
 	// Reset Book parameters
@@ -154,5 +155,7 @@ wxBEGIN_EVENT_TABLE(NotebookSoulPage, SchedProjPage)
 	EVT_CHECKBOX(wxID_ANY, NotebookSoulPage::OnCheckOrRadioBox)
 	EVT_RADIOBOX(wxID_ANY, NotebookSoulPage::OnCheckOrRadioBox)
 
+	EVT_UPDATE_UI(BookPage_NumPagesText, NotebookSoulPage::OnUpdateUINumPagesText)
+	EVT_UPDATE_UI(BookPage_CurSelectText, NotebookSoulPage::OnUpdateUICurSelectText)
 
 wxEND_EVENT_TABLE()
