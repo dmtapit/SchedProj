@@ -88,6 +88,10 @@ protected:
 	void OnUpdateUINumPagesText(wxUpdateUIEvent& event);
 	void OnUpdateUICurSelectText(wxUpdateUIEvent& event);
 
+	void OnUpdateUISelectButton(wxUpdateUIEvent& event);
+	void OnUpdateUIInsertButton(wxUpdateUIEvent& event);
+	void OnUpdateUIRemoveButton(wxUpdateUIEvent& event);
+
 
 	// Reset Book parameters
 	void Reset();
@@ -158,4 +162,7 @@ wxBEGIN_EVENT_TABLE(NotebookSoulPage, SchedProjPage)
 	EVT_UPDATE_UI(BookPage_NumPagesText, NotebookSoulPage::OnUpdateUINumPagesText)
 	EVT_UPDATE_UI(BookPage_CurSelectText, NotebookSoulPage::OnUpdateUICurSelectText)
 
+	EVT_UPDATE_UI(BookPage_SelectPage, NotebookSoulPage::OnUpdateUISelectButton)
+	EVT_UPDATE_UI(BookPage_InsertPage, NotebookSoulPage::OnUpdateUIInsertButton)
+	EVT_UPDATE_UI(BookPage_RemovePage, NotebookSoulPage::OnUpdateUIRemoveButton)
 wxEND_EVENT_TABLE()

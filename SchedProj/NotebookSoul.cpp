@@ -323,14 +323,40 @@ void NotebookSoulPage::OnUpdateUICurSelectText(wxUpdateUIEvent& event)
 		event.SetText(wxString::Format(wxT("%d"), m_book->GetSelection()));
 }
 
+void NotebookSoulPage::OnUpdateUISelectButton(wxUpdateUIEvent& event)
+{
+	event.Enable(IsValidValue(GetTextValue(m_textSelect)));
+}
+
+void NotebookSoulPage::OnUpdateUIInsertButton(wxUpdateUIEvent& event)
+{
+	event.Enable(IsValidValue(GetTextValue(m_textInsert)));
+}
+
+void NotebookSoulPage::OnUpdateUIRemoveButton(wxUpdateUIEvent& event)
+{
+	event.Enable(IsValidValue(GetTextValue(m_textRemove)));
+}
+
+/* [Dean Tapit]
+	Another class that is inherited by NotebookSoul (the one that overrides SchedProjPage?)
+	which is what actually contains the wxNotebook.
+	Think about why this class' methods are put into a separate class as opposed to in the same
+	area as NotebookSoul.
+
+	(Actually, looking at the sample code, there are multiple ways of creating a notebook,
+	such as a Choicebook, and Listbook, aside from the OG Notebook. (lol, OG!)
+*/
 #if wxUSE_NOTEBOOK
 
 //#include "icons/notebook.xpm"
 #include "wx/notebook.h"
 
-////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+//
 // NotebookWidgetsPage
-////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////////////////////////////////////////
 
 /*
 	This is (finally) what actually contains the widget itself (wxNotebook)
@@ -347,9 +373,9 @@ public:
 
 protected:
 
-	// event handlers
-	//void OnPageChanging(wxNotebookEvent& event);
-	//void OnPageChanged(wxNotebookEvent& event);
+	// event handlers ([Dean Tapit]: Used for EVT_UPDATE_UI ... OnUpdateUISelectButton)
+	void OnPageChanging(wxNotebookEvent& event);
+	void OnPageChanged(wxNotebookEvent& event);
 
 	// (re)create book ([Dean Tapit] Notice how this is a virtual function/ wxOVERRIDE)
 	virtual wxBookCtrlBase *CreateBook(long flags) wxOVERRIDE
@@ -358,9 +384,18 @@ protected:
 	}
 
 private:
-	//wxDECLARE_EVENT_TABLE();
+	wxDECLARE_EVENT_TABLE();
 	DECLARE_WIDGETS_PAGE(NotebookWidgetsPage)
 };
+
+///////////////////////////////////////////////////////////
+// Event Table for NotebookWidgetsPage
+///////////////////////////////////////////////////////////
+
+wxBEGIN_EVENT_TABLE(NotebookWidgetsPage, NotebookSoulPage)
+	EVT_NOTEBOOK_PAGE_CHANGING(wxID_ANY, NotebookWidgetsPage::OnPageChanging)
+	EVT_NOTEBOOK_PAGE_CHANGING(wxID_ANY, NotebookWidgetsPage::OnPageChanged)
+wxEND_EVENT_TABLE()
 
 #if defined(__WXUNIVERSAL__)
 #define FAMILY_CTRLS UNIVERSAL_CTRLS
@@ -370,13 +405,27 @@ private:
 #define FAMILY_CTRLS ALL_CTRLS
 #endif
 
-
 // [Dean Tapit] : why is it necessary to add BOOK_CTRLS? what exactly is FAMILY_CTRLS?
 IMPLEMENT_WIDGETS_PAGE(NotebookWidgetsPage, wxT("Notebook"), FAMILY_CTRLS | BOOK_CTRLS);
 
-// void NotebookSoulPage::OnPageChanging(wxNotebookEvent& event)
+void NotebookWidgetsPage::OnPageChanging(wxNotebookEvent& event)
+{
+	wxLogMessage(wxT("Notebook page changing from %d to %d (currently %d)."),
+		event.GetOldSelection(),
+		event.GetSelection(),
+		m_book->GetSelection());
 
-// void NotebookSoulPage::OnPageChanged(wxNotebookEvent& event)
+	event.Skip();
+}
 
+void NotebookWidgetsPage::OnPageChanged(wxNotebookEvent& event)
+{
+	wxLogMessage(wxT("Notebook page changed from %d to %d (currently %d)."),
+		event.GetOldSelection(),
+		event.GetSelection(),
+		m_book->GetSelection());
+
+	event.Skip();
+}
 
 #endif // wxUSE_NOTEBOOK
