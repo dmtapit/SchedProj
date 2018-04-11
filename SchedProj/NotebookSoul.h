@@ -83,6 +83,11 @@ protected:
 	void OnButtonRemovePage(wxCommandEvent& event);
 	void OnButtonDeleteAll(wxCommandEvent& event);
 
+	void OnCheckOrRadioBox(wxCommandEvent& event);
+
+
+
+
 	// Reset Book parameters
 	void Reset();
 
@@ -146,5 +151,8 @@ wxBEGIN_EVENT_TABLE(NotebookSoulPage, SchedProjPage)
 	EVT_BUTTON(BookPage_RemovePage, NotebookSoulPage::OnButtonRemovePage)
 	EVT_BUTTON(BookPage_DeleteAll, NotebookSoulPage::OnButtonDeleteAll)
 
-	
+	EVT_CHECKBOX(wxID_ANY, NotebookSoulPage::OnCheckOrRadioBox)
+	EVT_RADIOBOX(wxID_ANY, NotebookSoulPage::OnCheckOrRadioBox)
+
+
 wxEND_EVENT_TABLE()

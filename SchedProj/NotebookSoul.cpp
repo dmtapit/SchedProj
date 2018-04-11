@@ -39,7 +39,7 @@ void NotebookSoulPage::CreateContent()
 	// Left pane
 	wxStaticBox *box = new wxStaticBox(this, wxID_ANY, wxT("&Set style"));
 
-	// must be in sync with Orient enum
+	// must be in sync with Orient enum ([Dean Tapit]: See comment on NotebookSoulPage::Reset function)
 	wxArrayString orientations;
 	orientations.Add(wxT("&top"));
 	orientations.Add(wxT("&bottom"));
@@ -115,6 +115,15 @@ NotebookSoulPage::~NotebookSoulPage()
 // [ OPERATIONS ]
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/* [Dean Tapit]
+	This also sets the radio orientation selection to Orient_Top.  This is new to me so I am writing
+	down this comment.  Since Orient_Top is part of a group of enum called Orient, the values of said
+	Orient starting with value of int = 0 (Orient_Top).  The following enum ID's are then 1, 2, 3, and
+	4 int values for Orient_Bottom, Orient_Left, Orient_Right, and Orient_Max.  It is through this
+	method that the wxRadioBox can be identified by enum.  Of course, to keep the ID's the same as
+	the enums, the radiobox items must be added in the same order as the enum (or vice versa), where the
+	names of the enum should correspond with the order the radio items were added into wxRadioBox.
+*/
 void NotebookSoulPage::Reset()
 {
 	m_chkImages->SetValue(true);
@@ -296,6 +305,12 @@ void NotebookSoulPage::OnButtonDeleteAll(wxCommandEvent& WXUNUSED(event))
 {
 	m_book->DeleteAllPages();
 }
+
+void NotebookSoulPage::OnCheckOrRadioBox(wxCommandEvent& WXUNUSED(event))
+{
+	RecreateBook();
+}
+
 
 
 #if wxUSE_NOTEBOOK
