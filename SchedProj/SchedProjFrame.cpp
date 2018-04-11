@@ -13,7 +13,8 @@
 
 #include "wx/wupdlock.h"
 
-#include "wx/persist/toplevel.h"
+#include "wx/persist/toplevel.h" // [Dean Tapit]: used for the main frame (SchedProjFrame) to set a minimum size (?)
+#include "wx/persist/treebook.h" // [Dean Tapit]: needed for use of wxPersistentRegisterAndRestore for a wxTreebook object
 
 // If one does not want to use separate header(.h) and main(.cpp) files, can probably
 // just combine both; so, all the SchedProjFrame.h would go above the code in SchedProjFrame.cpp
@@ -54,6 +55,16 @@ wxEND_EVENT_TABLE()
 
 SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(600, 500))
 {
+	/* [Dean Tapit]
+		Used to check if "this", the frame's, size has been set, using a method of wxSize on the panel
+		inside this frame called GetBestSize().  If sizeSet was already initialized(?), then 
+		SetClientSize would be used followed by SetMinClientSize; otherwise, only SetMinClientSize.
+		The magic is such that using SetClientSize "to size a window tends to be more device-independent
+		than SetSize()", according to the wxWidgets documentation.
+
+		The "Client" being referred to, I assume, is the size of stuff inside the window (in this case,
+		the stuff inside SchedProjFrame).
+	*/
 	const bool sizeSet = wxPersistentRegisterAndRestore(this, "Main");
 
 	// set the frame icon
@@ -132,8 +143,9 @@ SchedProjFrame::SchedProjFrame(const wxString& title) : wxFrame(NULL, wxID_ANY, 
 	// The code below uses a wxPersistentRegisterAndRestore which is from the library "wx/persist/toplevel.h"
 	const wxSize sizeMin = m_panel->GetBestSize();
 	if (!sizeSet)
-		SetClientSize(sizeMin);
-	SetMinClientSize(sizeMin);
+		SetClientSize(sizeMin); // Set the client (stuff inside window) to sizeMin, which as seen above, is the GetBestSize()!
+								// Thus, the client aims to become the same size as the window (the sizeMin, of m_panel)
+	SetMinClientSize(sizeMin); // Sets the minimum client size, note that the min is visibly used when SetClientSize is not used
 
 #if wxUSE_STATUSBAR
 	CreateStatusBar(2);
@@ -262,13 +274,13 @@ void SchedProjFrame::InitBook()
 			wxSchedProjbookEventHandler(SchedProjFrame::OnPageChanged));
 
 	// What exactly does this do?
-	//const bool pageSet = wxPersistentRegisterAndRestore(m_book);
+	const bool pageSet = wxPersistentRegisterAndRestore(m_book);
 
 #if USE_TREEBOOK
 	// for treebook page #0 is empty parent page only so select the first page
 	// with some contents
-	//if (!pageSet)
-	//	m_book->SetSelection(1);
+	if (!pageSet)
+		m_book->SetSelection(1);
 
 	// but ensure that the top of the tree is shown nevertheless
 	wxTreeCtrl * const tree = m_book->GetTreeCtrl();
