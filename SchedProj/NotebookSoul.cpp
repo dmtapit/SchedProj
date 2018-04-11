@@ -46,7 +46,8 @@ void NotebookSoulPage::CreateContent()
 	orientations.Add(wxT("&left"));
 	orientations.Add(wxT("&right"));
 
-	//wxASSERT_MSG((...........)
+	// [Dean Tapit]: Interesting...? Like an error catch or something...
+	wxASSERT_MSG(orientations.GetCount() == Orient_Max, wxT("forgot to update something"));
 
 	m_chkImages = new wxCheckBox(this, wxID_ANY, wxT("Show &images"));
 	m_radioOrient = new wxRadioBox(this, wxID_ANY, wxT("&Tab orientation"),
@@ -101,7 +102,7 @@ void NotebookSoulPage::CreateContent()
 
 	// Final initializations // Check to see what these actually do later
 	Reset();
-	//CreateImageList();
+	CreateImageList();
 
 	SetSizer(sizerTop);
 }
@@ -192,7 +193,7 @@ void NotebookSoulPage::RecreateBook()
 
 	m_book = CreateBook(flags);
 
-	//CreateImageList();
+	CreateImageList();
 
 	if (oldBook)
 	{
@@ -283,6 +284,9 @@ void NotebookSoulPage::OnButtonAddPage(wxCommandEvent& WXUNUSED(event))
 void NotebookSoulPage::OnButtonSelectPage(wxCommandEvent& WXUNUSED(event))
 {
 	int pos = GetTextValue(m_textSelect);
+	wxCHECK_RET(IsValidValue(pos), wxT("button should be disabled"));
+
+	m_book->SetSelection(pos);
 }
 
 void NotebookSoulPage::OnButtonInsertPage(wxCommandEvent& WXUNUSED(event))
@@ -339,6 +343,17 @@ void NotebookSoulPage::OnUpdateUIRemoveButton(wxUpdateUIEvent& event)
 }
 
 /* [Dean Tapit]
+	?? Is this...reall;y needed? There is already a Reset()...redundant? Why does the sample have
+	no constructive comments?!
+*/
+void NotebookSoulPage::OnUpdateUIResetButton(wxUpdateUIEvent& event)
+{
+	if (m_chkImages && m_radioOrient)
+		event.Enable(!m_chkImages->GetValue() || m_radioOrient->GetSelection() != wxBK_TOP);
+}
+
+
+/* [Dean Tapit]
 	Another class that is inherited by NotebookSoul (the one that overrides SchedProjPage?)
 	which is what actually contains the wxNotebook.
 	Think about why this class' methods are put into a separate class as opposed to in the same
@@ -392,9 +407,19 @@ private:
 // Event Table for NotebookWidgetsPage
 ///////////////////////////////////////////////////////////
 
+// [Dean Tapit]: The Order here doesn't matter; it seems "CHANGING" will be triggered first
+// always before "CHANGED"...
+// Another thing to keep in mind...the output makes sense when utilizing the "Select" button
+// i.e.	when wanting to select page 1 from page 0 using the "Select" button...
+//		changing 0 to 1 (currently 0)
+//		changed 0 to 1 (currently 1)
+// However, if you click on the tabs of the notebook instead...
+//		changing 0 to 0 (currently 0)		<--- Wondering if this can be changed, a minor problem though
+//		changed 0 to 1 (currently 1)
+
 wxBEGIN_EVENT_TABLE(NotebookWidgetsPage, NotebookSoulPage)
 	EVT_NOTEBOOK_PAGE_CHANGING(wxID_ANY, NotebookWidgetsPage::OnPageChanging)
-	EVT_NOTEBOOK_PAGE_CHANGING(wxID_ANY, NotebookWidgetsPage::OnPageChanged)
+	EVT_NOTEBOOK_PAGE_CHANGED(wxID_ANY, NotebookWidgetsPage::OnPageChanged)
 wxEND_EVENT_TABLE()
 
 #if defined(__WXUNIVERSAL__)

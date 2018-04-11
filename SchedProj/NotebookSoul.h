@@ -92,6 +92,7 @@ protected:
 	void OnUpdateUIInsertButton(wxUpdateUIEvent& event);
 	void OnUpdateUIRemoveButton(wxUpdateUIEvent& event);
 
+	void OnUpdateUIResetButton(wxUpdateUIEvent& event);
 
 	// Reset Book parameters
 	void Reset();
