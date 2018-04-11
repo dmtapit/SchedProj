@@ -77,9 +77,11 @@ public:
 protected:
 	// [ EVENT HANDLERS ] ///////////////////////////////////////////////
 	void OnButtonReset(wxCommandEvent& event);
-
-
-
+	void OnButtonAddPage(wxCommandEvent& event);
+	void OnButtonSelectPage(wxCommandEvent& event);
+	void OnButtonInsertPage(wxCommandEvent& event);
+	void OnButtonRemovePage(wxCommandEvent& event);
+	void OnButtonDeleteAll(wxCommandEvent& event);
 
 	// Reset Book parameters
 	void Reset();
@@ -91,13 +93,25 @@ protected:
 	// create or destroy the image list
 	void CreateImageList();
 
-	// create a new page
-	wxWindow *CreateNewPage();
+
+	// Helper Functions (used in event handlers) /////////////////////////////////////
 
 	// get the image index for the new page
 	int GetIconIndex() const;
 
-	// Controls //////////////////////////
+	// create a new page
+	wxWindow *CreateNewPage();
+
+	// get the numeric value of text ctrl
+	int GetTextValue(wxTextCtrl *text) const;
+
+	// is the value in range?
+	bool IsValidValue(int val) const
+	{
+		return (val >= 0) && (val < (int)m_book->GetPageCount());
+	}
+
+	// Controls //////////////////////////////////////////////////////////////////////
 
 	// the check/radio boxes for styles
 	wxCheckBox *m_chkImages;
@@ -121,8 +135,16 @@ private:
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // [ Event Table ]
+// - Connects the ID's with their respective functions
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 wxBEGIN_EVENT_TABLE(NotebookSoulPage, SchedProjPage)
 	EVT_BUTTON(NotebookPage_Reset, NotebookSoulPage::OnButtonReset)
+	EVT_BUTTON(BookPage_AddPage, NotebookSoulPage::OnButtonAddPage)
+	EVT_BUTTON(BookPage_SelectPage, NotebookSoulPage::OnButtonSelectPage)
+	EVT_BUTTON(BookPage_InsertPage, NotebookSoulPage::OnButtonInsertPage)
+	EVT_BUTTON(BookPage_RemovePage, NotebookSoulPage::OnButtonRemovePage)
+	EVT_BUTTON(BookPage_DeleteAll, NotebookSoulPage::OnButtonDeleteAll)
+
+	
 wxEND_EVENT_TABLE()

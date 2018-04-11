@@ -217,9 +217,9 @@ void NotebookSoulPage::RecreateBook()
 
 }  // End RecreateBook()
 
-////////////////////////////////////////////
-// helper functions
-////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+// Helper functions (used in EVENT HANDLERS)
+//////////////////////////////////////////////////////////////////////////////
 
 int NotebookSoulPage::GetIconIndex() const
 {
@@ -242,6 +242,18 @@ wxWindow *NotebookSoulPage::CreateNewPage()
 	return new wxTextCtrl(m_book, wxID_ANY, wxT("I'm a book page"));
 }
 
+/*
+	[Dean Tapit] This doesn't make sense. Would not this always return -1??
+*/
+int NotebookSoulPage::GetTextValue(wxTextCtrl *text) const
+{
+	long pos = -1;
+
+	if (!text || !text->GetValue().ToLong(&pos))
+		pos = -1;
+
+	return (int)pos;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // [ EVENT HANDLERS ]
@@ -253,6 +265,38 @@ void NotebookSoulPage::OnButtonReset(wxCommandEvent& WXUNUSED(event))
 
 	RecreateBook();
 }
+
+void NotebookSoulPage::OnButtonAddPage(wxCommandEvent& WXUNUSED(event))
+{
+	m_book->AddPage(CreateNewPage(), wxT("Added page"), false, GetIconIndex());
+}
+
+void NotebookSoulPage::OnButtonSelectPage(wxCommandEvent& WXUNUSED(event))
+{
+	int pos = GetTextValue(m_textSelect);
+}
+
+void NotebookSoulPage::OnButtonInsertPage(wxCommandEvent& WXUNUSED(event))
+{
+	int pos = GetTextValue(m_textInsert);
+	wxCHECK_RET(IsValidValue(pos), wxT("button should be disabled"));
+
+	m_book->InsertPage(pos, CreateNewPage(), wxT("Inserted page"), false, GetIconIndex());
+}
+
+void NotebookSoulPage::OnButtonRemovePage(wxCommandEvent& WXUNUSED(event))
+{
+	int pos = GetTextValue(m_textRemove);
+	wxCHECK_RET(IsValidValue(pos), wxT("button should be disabled"));
+
+	m_book->DeletePage(pos);
+}
+
+void NotebookSoulPage::OnButtonDeleteAll(wxCommandEvent& WXUNUSED(event))
+{
+	m_book->DeleteAllPages();
+}
+
 
 #if wxUSE_NOTEBOOK
 
